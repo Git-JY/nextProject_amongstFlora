@@ -1,0 +1,1966 @@
+@import "./common";
+
+html{
+    font-size: 16px;    
+}
+
+body{
+    background-color: green;
+
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+    font-family: 'SUITE-Regular';
+}
+button{
+    cursor: pointer;
+}
+img{
+    vertical-align: middle;
+}
+li{list-style: none;}
+input{
+    white-space: nowrap;
+    &::placeholder{
+        opacity: 70%;
+        white-space: nowrap;
+    }
+    &:focus{
+        outline: none;
+    }
+}
+
+
+
+
+
+div.all{
+    background-color: white;
+    position: relative; top: 0; left: 0; z-index: 0;
+    width: 100%; height: 100vh; max-width: 780px;
+    
+    >header{
+        display: none;
+        position: fixed; top: 0; left: 0; z-index: 100;
+        width: 100%; max-width: 780px;
+        background-color: white;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        transition: .3s;
+
+        &.active{
+            display: inline-block;
+        }
+
+        &.up{
+            transform: translateY(-170px);
+            pointer-events: none;
+        }
+
+        >form.searchAllOptionWrapper{
+            // outline: 1px solid goldenrod;
+
+            >div.searchOption_visual{
+                // outline: 2px solid red;
+                @include flex(){flex-direction: column;}
+                margin: 40px $MarPad 40px;
+
+                >ul.sType_Wrapper{ // 식물명, 학명, 영명
+                    @include flex(space-between);
+                    width: 310px; height: 40px;
+                    margin-bottom: 18px;
+                    
+                    >li{
+                        width: 90px; height: 100%;
+
+                        >input[type='radio']{display: none;}
+                        >label{
+                            @include flex();
+                            width: 100%; height: 100%;
+                            border: 1px solid black; border-radius: 50px;
+                            @include font(1.25rem, 600, inherit);
+                            letter-spacing: 2px;
+                            box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+
+                            cursor: pointer;
+                        }//label
+                        >input:checked + label{
+                            color: white;
+                            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;
+                        }
+                    }//li
+
+                    >li:nth-child(1){
+                        >label{
+                            border-color: $mainColor1;
+                            color: $mainColor1;
+                        }
+                        >input:checked + label{
+                            background-color: $mainColor1;
+                        }
+                    }
+                    >li:nth-child(2){
+                        >label{
+                            border-color: $mainColor2;
+                            color: $mainColor2;
+                        }
+                        >input:checked + label{
+                            background-color: $mainColor2;
+                        }
+                    }
+                    >li:nth-child(3){
+                        >label{
+                            border-color: $mainColor3;
+                            color: $mainColor3;
+                        }
+                        >input:checked + label{
+                            background-color: $mainColor3;
+                        }
+                    }
+                }//ul.sType_Wrapper
+
+                >div.searchWrapper{
+                    position: relative; top: 0; left: 0; z-index: 0;
+                    @include flex(space-between);
+                    width: 100%;
+                    border-radius: 50px;
+                    background: #D9D9D9;
+                    padding: 0px 30px;
+
+                    overflow: hidden;
+
+                    >input.sTest{
+                        border: none; outline: none;
+                        width: 100%;
+                        padding: 22px 0px;
+                        background-color: transparent;
+
+                        @include font(1.25rem, 500, gray);
+
+                        &::placeholder{
+                            opacity: 80%;
+                        }
+                        &:focus{
+                            outline: none;
+                        }
+                        
+                        //자동완성 색 // 우선순위를 못 차지해서 그냥 배경색을 덮어버림
+                        &:-webkit-autofill,
+                        &:-webkit-autofill:hover,
+                        &:-webkit-autofill:focus,
+                        &:-webkit-autofill:active {
+                            -webkit-text-fill-color: gray;
+                            box-shadow: 0 0 0px 1000px #D9D9D9 inset;
+                        }
+                    }
+
+                    >button.searchBtn{
+                        border: none;
+                        width: 27px; height: 29px;
+                        background: url('/img/icon_search.svg') center center / 100% 100% no-repeat scroll;
+                    }
+                }//div.searchWrapper
+
+            }//div.searchOption_hide
+
+
+            
+            >div.searchOptionScroll_hide{ //스크롤
+                height: 0px;
+                overflow-y: auto;
+                padding: 0px $MarPad;
+                box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25) inset;
+
+                transition: .2s;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+                &::-webkit-scrollbar-track {
+                    background: #9b6a2f; /* 스크롤바 뒷 배경 색상 */
+                }
+
+                >ul{
+                    padding: 30px 0;
+                    @include flex(){
+                        flex-shrink: 0;
+                        flex-wrap: wrap;
+                        row-gap: 20px;
+                        column-gap: 30px;
+                    };
+                    &:not(:last-child){
+                        position: relative; top: 0; left: 0; z-index: 0;
+                        &:after{ // dashed 길이 조절이 안돼서 이렇게 함
+                            position: absolute; left: 0; bottom: 0;
+                            content: '';
+                            width: 100%; height: 1px;
+                            background: url('/img/dashedSVG.svg');  
+                        }
+                        // border-bottom: 1px dashed rgba(167, 181, 154, 0.8);
+                    }
+                    >li{}
+
+                    >li.select{
+                        // outline: 1px solid green;
+                        @include flex(flex-start){
+                            flex-shrink: 0;
+                        };
+                        >label{
+                            @include flex(flex-start);
+                            @include font(1.25rem, 700, black){
+                                letter-spacing: 2px;
+                            }
+                            margin-right: 15px;
+
+                            &::before{ //이미지
+                                // outline: 1px solid red;
+
+                                content: '';
+                                width: 22px; height: 22px;
+                                margin-right: 20px;
+                            }
+
+                        }
+
+                        >select{
+                            border-radius: 10px;
+                            border: 1px solid $lightColor1;
+                            background: #FFF;
+                            padding: 10px;
+                            @include font(1rem, 600, black);
+
+                            cursor: pointer;
+
+                            -o-appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            background: url('/img/icon_selectArrow.svg') calc(100% - 10px) 50% / 8px no-repeat scroll;
+
+                            &:focus{outline: none;}
+
+                            >option{
+                                
+                                padding: 10px;
+
+                            }
+                        }
+
+                    }//li.select
+
+                    // label 이미지
+                    &:nth-child(2){
+                        >li:nth-child(1){>label{&::before{
+                            background: url('/img/icon_flower.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                        >li:nth-child(2){>label{&::before{
+                            background: url('/img/icon_fruit.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                        >li:nth-child(3){>label{&::before{
+                            background: url('/img/icon_leaves.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                    }
+                    &:nth-child(3){
+                        >li:nth-child(1){>label{&::before{
+                            background: url('/img/icon_leaf.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                        >li:nth-child(2){>label{&::before{
+                            background: url('/img/icon_pot.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+
+                    }
+                    &:nth-child(4){
+                        >li:nth-child(1){>label{&::before{
+                            background: url('/img/icon_sun.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                        >li:nth-child(2){>label{&::before{
+                            background: url('/img/icon_water.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                    }
+                    &:nth-child(5){
+                        >li:nth-child(1){>label{&::before{
+                            background: url('/img/icon_money.svg') center center / 100% 100% no-repeat scroll;
+                        }}}//li
+                    }
+
+
+                }//ul
+
+                >ul.koreanChar_wrapper{ //한글 철자
+                    @include flex(){
+                        flex-shrink: 0;
+                        flex-wrap: wrap;
+                        column-gap: 0px;
+                        row-gap: 0px;
+                    };
+                    padding: 20px 0;
+                    >li{
+                        // outline: 1px solid red;
+                        @include flex();
+                        @include font(1.5rem, 700, black);
+                        width: 27px; height: 27px;
+                        &:not(:first-child){
+                            margin-left: 6px;
+                        }
+                        >input[type='radio']{display: none;}
+                        >label{
+                            @include flex();
+                            width: 100%; height: 100%;
+                            border-radius: 50%;
+                            cursor: pointer;
+                        }
+                        >input:checked + label{
+                            background-color: $lightColor1;
+                            color: white;
+                        }
+                        
+                    }//li
+
+                }//ul.koreanChar_wrapper
+
+                >ul.optionGroup_color{}
+
+                >ul.optionGroup_shape{}
+
+                >ul.optionGroup_need{
+                    >li.radio{
+                        text-align: center;
+                        >b{
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            @include font(1.25rem, 600, black){
+                                letter-spacing: 4px;
+                            }
+                        }
+                      
+                        >ul{
+                            @include flex(){
+                                flex-wrap: wrap;
+                                flex-shrink: 0;
+                                row-gap: 8px;
+                                column-gap: 15px;
+                            }
+                            height: 30px;
+
+                            li{
+                                height: 100%;
+                                
+                                >input[type='radio']{display: none;} //==============================
+                                >label{
+                                    @include flex();
+                                    height: 100%;
+                                    border-radius: 10px;
+                                    border: 1px solid $grayColor2;
+
+                                    @include font(1.25rem, 600, black){
+                                        letter-spacing: 2px;
+                                    }
+                                    cursor: pointer;
+                                }
+                                >input:checked + label{
+                                    color: white;
+                                }
+                            }//li
+
+                            
+                        }
+                        
+                        ul.ignSeasonChkVal{ // 꽃 피는 계절
+                            >li{
+                                >label{
+                                    width: 55px;
+                                }
+
+                                &:nth-child(1){
+                                    >label{
+                                    border-color: $lightColor2;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $lightColor2;
+                                    }
+                                }//&:nth-child(1)
+                                &:nth-child(2){
+                                    >label{
+                                    border-color: $mainColor1;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $mainColor1;
+                                    }
+                                }//&:nth-child(2)
+                                &:nth-child(3){
+                                    >label{
+                                    border-color: $mainColor3;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $mainColor3 ;
+                                    }
+                                }//&:nth-child(3)
+                                &:nth-child(4){
+                                    >label{
+                                    border-color: $mainColor2;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $mainColor2;
+                                    }
+                                }//&:nth-child(4)
+                                &:nth-child(5){
+                                    >label{
+                                        border-color: $grayColor2;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $grayColor2;
+                                    }
+                                }//&:nth-child(5)
+
+                            }//li
+
+                        }//ul#ignSeasonChkVal
+
+                        ul.winterLwetChkVal{ //겨울 최저온도
+                            >li{
+                                >label{
+                                    padding: 0 7px;
+                                }
+
+                                &:nth-child(1){
+                                    >label{
+                                        border-color: $mainColor1;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $mainColor1;
+                                    }
+                                }
+
+                                &:nth-child(2){
+                                    >label{
+                                        border-color: #8EB89C;
+                                    }
+                                    >input:checked + label{
+                                        background-color: #8EB89C;
+                                    }
+                                }
+
+                                &:nth-child(3){
+                                    >label{
+                                        border-color: $lightColor2;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $lightColor2;
+                                    }
+                                }
+
+                                &:nth-child(4){
+                                    >label{
+                                        border-color: rgb(212, 175, 146);
+                                    }
+                                    >input:checked + label{
+                                        background-color: rgb(212, 175, 146);
+                                    }
+                                }
+
+                                &:nth-child(5){
+                                    >label{
+                                        border-color: $mainColor3;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $mainColor3;
+                                    }
+                                }
+
+                                &:nth-child(6){
+                                    >label{
+                                        border-color: $grayColor2;
+                                    }
+                                    >input:checked + label{
+                                        background-color: $grayColor2;
+                                    }
+                                }
+                            }//li
+
+                        }//ul#winterLwetChkVal
+
+                    }//li.radio
+                }//ul
+
+                >ul.optionGroup_money{
+
+                }
+
+            }//div.searchOption_hide
+
+            >div.bottom_hide{
+                @include flex();
+                height: 0px;
+                overflow: hidden;
+
+                &::before{
+                    content: '';
+                    width: 25px; height: 25px;
+                    background: url('/img/icon_mouse.svg') center center / 100% 100% no-repeat scroll;
+                }
+
+
+            }//div.bottom_hide
+
+            >button.underBtn{
+                position: absolute; left: 50%; bottom: 0; z-index: 99;
+                border: none; background-color: white;
+                // outline: 1px solid red;
+                transform: translate(-50%, 80%);
+                
+                width: 120px; height: 50px; border-radius: 0px 0px 100px 100px;
+                @include flex();
+
+                &::after{
+                    content: '';
+                    width: 23px; height: 30px;
+                    
+                    background: url('/img/icon_downArrow.svg') center center / 100% 100% no-repeat scroll;
+                    transform: rotate(0deg);
+                    transition: .2s;
+                }
+            }//button.underBtn
+            
+            &.active{
+                div.searchOptionScroll_hide{
+                    height: 350px;
+                    overflow-y: scroll;
+                }
+
+                >div.bottom_hide{
+                    height: 50px;
+                }
+                
+                >button.underBtn{
+                    &::after{
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }//form.searchAllOptionWrapper
+
+    }//header
+
+    >main{
+        width: 100%; height: 100%;
+        position: relative; top: 0; left: 0; z-index: 0;
+
+
+        >div.Login{
+            position: relative;
+            width: 100%; height: 100%; 
+
+            //background-color: green;
+            background: white url('/img/backImg.jpg') right top / cover no-repeat scroll;
+            @include flex();
+            padding: 0 $MarPad;
+
+            &::before{
+                content: '';
+                position: absolute; top: 0; left: 0; z-index: 0;
+                width: 100%; height: 100%;
+
+                background-color: rgba(0,0,0,0.1);
+            }
+        
+        
+            >div.entire{
+                position: relative;
+                // outline: 1px solid red;
+                width: 100%; height: 75%;
+
+                @include flex(space-between, center){flex-direction: column}
+
+                >h1{
+                    @include flex(){flex-direction: column}
+                    >b.title_Ko{
+                        @include font(4rem, 600, white){
+                            letter-spacing: 12.8px;
+                            white-space: nowrap;
+                        }
+                    }
+                    >span.title_En{
+                        @include font(2.5rem, 400, white){
+                            @include english();
+                            letter-spacing: 8px;
+                            white-space: nowrap;
+                        }
+                    }
+                }//h1
+
+                >div.loginWrapper{
+                    width: 100%;
+
+                    >button{
+                        position: relative;
+                        @include flex();
+
+                        width: 100%;
+                        padding: 20px 47px;
+                        @include font(2rem, 900, black);
+                        white-space: nowrap;
+                        font-family: 'inter';
+                        border-radius: 50px;
+                        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                        border: none;
+
+                        &::before{
+                            content: '';
+                            display: inline-block;
+
+                            position: absolute; left: 47px;
+                            width: 53px; height: 53px;
+                            // outline: 1px solid red;
+                        }
+
+                        &.kakaoLogin{
+                            background-color: #FBE300;
+                            margin-bottom: 20px;
+                            color: #3B1F06;
+                            
+                            &::before{
+                                background: url('/img/icon_kakaoLogo.svg') center center / 100% 100% no-repeat scroll; 
+                            }
+                        }
+                        &.nomalLogin{
+                            background-color: white;
+
+                            &::before{
+                                background: url('/img/icon_nomalLogo.svg') center center / 100% 100% no-repeat scroll; 
+                            }
+                        }
+                    }//button
+
+                }//div.loginWrapper
+
+            }//div.entire
+
+
+
+
+            >div.LoginPopup_blackBg{// 검은 배경
+                display: none;
+                position: absolute; top: 0; left: 0; z-index: 1;
+                width: 100%; height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+
+                &.active{
+                    display: inline-block;
+                }
+            
+            
+                >div.LoginPopup{// 흰 팝업
+                    position: relative; top: 0; left: 0;
+                    background-color: white;
+                    border-radius: 10px;
+                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+                    position: absolute; top: 50%; left: 50%; 
+                    transform: translate(-50%, -50%);
+                    
+                    width: 75%; height: 700px;
+                    padding: 60px;
+
+                    @include flex();
+
+                    >button.xBtn{
+                        position: absolute; top: 25px; right: 25px;
+                        width: 20px; height: 20px;
+                        border: none;
+
+                        background: url('/img/icon_x.svg') center center / 100% 100% no-repeat scroll;
+
+                    }//button.xBtn
+
+                    >article{
+                        // outline: 1px solid red;
+                        @include flex(flex-start){flex-direction: column;}
+                        width: 100%;
+
+                        >h3{
+                            @include font(2.5rem, 600, black){
+                                letter-spacing: 4px;
+                                white-space: nowrap;
+                            }
+
+                            margin-bottom: 25px;
+                        }
+
+                        >form.contents{
+                            width: 100%;
+                            @include flex(flex-start){flex-direction: column;}
+                            
+                            >input[type='text']{
+                                border: 1px solid $grayColor2; border-radius: 10px;
+                                background: #FFF;
+                                width: 100%; 
+                                text-align: center;
+                                padding: 13px 0;
+                                @include font(1.25rem, 400, $grayColor2);
+                                font-family: 'Inter';
+                                
+                                &::placeholder{
+                                    @include font(1.25rem, 400, $grayColor2);
+                                    opacity: 70%;
+                                    white-space: nowrap;
+                                }
+                                &:focus{
+                                    outline: none;
+                                }
+                            }
+
+                            >button{
+                                width: 100%;
+                                padding: 18px 0;
+                                white-space: nowrap;
+                                border: none;
+                                border-radius: 10px;
+                                background: #E0E3D2;
+                                box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+                                @include font(2rem, 900, white){
+                                    letter-spacing: 9.6px;
+                                }
+                                
+                            }
+
+                            >div.pwWrapper{
+                                position: relative; top: 0; left: 0; z-index: 0;
+                                width: 100%;
+                                border: 1px solid $grayColor2; 
+                                border-radius: 10px;
+                                background: #FFF;
+                                margin-bottom: 10px;
+                                overflow: hidden;
+
+                                >input{
+                                    width: 100%; height: 100%;
+                                    border: none;
+                                    padding: 13px 0;
+
+                                    @include font(1.25rem, 400, $grayColor2);
+                                    font-family: 'Inter';
+                                    text-align: center;
+
+                                    &::placeholder{
+                                        @include font(1.25rem, 400, $grayColor2);
+                                        opacity: 70%;
+                                        white-space: nowrap;
+                                    }
+                                    &:focus{
+                                        outline: none;
+                                    }
+                                    
+                                }
+
+                                >button.eyeBtn{
+                                    // outline: 1px solid red;
+                                    position: absolute; top: 50%; right: 19px; transform: translateY(-50%);
+                                    border: none;
+                                    width: 24px; height: 24px;
+
+                                    background: url('/img/icon_eyeOff.svg') center center / 100% 100% no-repeat scroll;
+                                    
+                                    &.active{
+                                        background: url('/img/icon_eye.svg') center center / 100% 100% no-repeat scroll;
+                                    }
+                                }
+                            }
+
+                        }//form.contents
+
+                        >nav.footWrapper{
+                            margin-top: 25px;
+                            width: 100%;
+
+                            >span{
+                                white-space: nowrap;
+                                &:not(:last-child)::after{
+                                    content: '';
+                                    display: inline-block;
+                                    
+                                    width: 1px; height: 19px;
+                                    background-color: $grayColor1;
+                                    vertical-align: middle;
+                                    margin: 0px 10px;
+                                    
+                                }
+                                cursor: pointer;
+
+                                @include font(1rem, 500, $grayColor1)
+                            }
+                        }//nav.footWrapper
+
+                        // ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+                        // Login.js 컴포넌트)
+                        &.loginPage{
+
+                            >h3{}
+
+                            >form.contents{
+                                >input[type='text'].id{
+                                    margin-bottom: 25px;
+                                }
+
+                                >input[type='password'].pw{
+                                    margin-bottom: 45px;
+                                }
+
+                                >button.loginBtn{
+
+                                }
+                            }//form.contents
+
+                            >nav{
+                                >span{}
+                            }
+
+                        }//&.loginPage
+
+                        // PwHint.js 컴포넌트)
+                        &.pwHint{
+                            >h3{}
+
+                            >form.contents{
+                                >input[type='text'].id{
+
+                                }
+                                >span.passHint{
+                                    @include font(1.25rem, 500, black){
+                                        font-family: 'Inter';
+                                    }
+                                    margin: 40px 0px 55px;
+
+                                    &.active{
+                                        color: #C16363;
+                                    }
+
+                                }
+
+                                >button.FindBtn{
+
+                                }
+                            }//form.contents
+
+                            >nav{
+                                >span{}
+                            }
+                        }//&.pwHint
+
+                        //SignIn.js 컴포넌트)
+                        &.signIn{
+                            >h3{}
+
+                            >form.contents{
+                                >input[type='text'], span{
+                                    margin-bottom: 10px;
+                                }
+                                
+                                span{
+                                    width: 100%;
+                                    color:#C16363;
+                                    
+                                }
+
+                                >input[type='text'].nick{
+            
+                                }
+                                >input[type='text'].id{
+            
+                                }
+                                >span.idWarning{
+            
+                                }
+            
+                                >input[type='password'].pw{
+                                    
+                                }
+                                >input[type='password'].pwHint{
+            
+                                }
+                                >span.pwWarning{
+            
+                                }
+                            }//form.contents
+
+
+                            >nav{
+                                >span{}
+                            }
+                        }//&.signIn
+                    }//article
+
+                }//div.LoginPopup
+
+
+            }//}//div.LoginPopup_blackBg
+
+        }// div.Login
+
+        >div.home{
+            position: absolute; top: 0; left: 0; z-index: 0;
+            width: 100%; height: 100%;
+            background: url('/img/background.jpg') left bottom / cover no-repeat scroll; //임시
+        }//main
+
+        >div.search{
+            width: 100%; min-height: 100%;
+            background-color: $grayColor1;
+            padding: 280px $MarPad 270px; 
+            >div.contentsWrapper{
+                // outline: 1px solid red;
+                @include flex(flex-start){
+                    flex-direction: column;
+                }
+
+                >ul.itemsWrapper{
+                    width: 100%;
+                    @include flex(space-between){
+                        flex-wrap: wrap;
+                        flex-shrink: 0;
+                        row-gap: 30px;
+                    };
+                    margin-bottom: 40px;
+
+                    >li.item{
+                        // outline: 1px solid green;
+                        background-color: white;
+                        border-radius: 10px;
+                        width: 32%; height: 260px;
+                        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                        
+                        padding: 15px 20px;
+                        cursor: pointer;
+
+                        transition: .2s;
+
+                        &:hover{
+                            transform: translateY(-20px);
+                        }
+                        
+                        >figure{
+                            // outline: 1px solid goldenrod;
+                            width: 100%;
+                            text-align: center;
+                            i{
+                                // outline: 1px solid blue;
+                                position: relative; top: 0; left: 0;
+                                display: inline-block;
+                                width: 100%; height: 30vw; max-height: 140px;
+                                border-radius: 10px;
+                                overflow: hidden;
+                                margin-bottom: 15px;
+
+                                >img{
+                                    width: 100%; height: 100%;
+                                    object-fit: cover;
+                                    object-position: center center;
+            
+                                }
+                                >span.heart{
+                                    position: absolute; bottom: 7px; right: 7px;
+                                    width: 27px; height: 27px;
+                                    background: url('/img/icon_heart.svg') center center / 100% 100% no-repeat scroll;
+                                    
+                                    &.active{
+                                        background: url('/img/icon_heartActive.svg') center center / 100% 100% no-repeat scroll;
+
+                                    }
+                                }//span.heart
+                            }//p
+                            >figcaption{
+                                @include font(1.25rem, 600, black);
+                                letter-spacing: 2px;
+                            }
+                        }//figure
+                    }//li.item
+
+                }//ul.itemsWrapper
+
+                >button.moreBtn{
+                    display: none;
+                    border: 2px solid white; border-radius: 20px;
+                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                    background-color: $lightColor1;
+
+                    &.active{
+                        @include flex(){
+                            flex-direction: column;
+                        }
+                    }
+                    
+                    @include font(1.5rem, 700, white){
+                        font-family: 'inter';
+                        letter-spacing: 4.8px;
+                    }
+                    padding: 15px 42px;
+
+                    &::after{
+                        margin-top: 3px;
+                        content: '';
+                        width: 0; height: 0;
+                        border-top: 10px solid white;
+                        border-right: 10px solid transparent;
+                        border-left: 10px solid transparent;
+                        border-bottom: 0px solid transparent;
+                    }
+
+                }//button.moreBtn
+            }//div.contentsWrapper
+        }//div.search
+
+        >div.detail{
+            width: 100%; min-height: 100%;
+            background-color: white;
+            padding-bottom: 200px;
+            
+            >div.plantImgSwiper{ // Swiper
+                position: relative; top: 0; left: 0; z-index: 0;
+                width: 100%; height: 650px;
+                overflow: hidden;
+
+                margin-bottom: 40px;
+                cursor: pointer;
+
+                >.swiper-wrapper{
+                    position: relative; top: 0; left: 0; z-index: 0;
+                    width: 100%; height: 100%;
+                    @include flex(flex-start);
+                    
+                    >.swiper-slide{
+                        position: relative; top: 0; left: 0;
+                        flex-shrink: 0;
+                        width: 100%; height: 100%;
+                        >img{
+                            width: 100%; height: 100%;
+                            object-fit: cover;
+                        }
+                        &::after{
+                            position: absolute; top: 0; left: 0; z-index: 1;
+                            content: '';
+                            width: 100%; height: 100%;
+                            background-color: rgba(0,0,0,.1);
+
+                        }
+                    }//.swiper-slide
+                }//.swiper-wrapper
+
+                >.swiper-pagination{
+                    position: absolute; bottom: 25px; right: 35px; z-index: 1;
+                    height: 30px;
+                    background-color: rgba(0,0,0,.5); border-radius: 50px;
+
+                    @include flex();
+                    padding: 8px 17px;
+                    >.swiper-pagination-bullet{
+                        &:not(:last-child){
+                            margin-right: 12px;
+                        }
+                        flex-shrink: 0;
+                        width: 13px; height: 13px; border-radius: 50%;
+                        background-color: white;
+                        opacity: 50%;
+                        
+                        &.swiper-pagination-bullet-active{
+                            opacity: 80%;
+
+                        }
+
+                    }//.swiper-pagination-bullet
+                }//.swiper-pagination
+            }//div.plantImgSwiper
+
+
+
+
+            >section.infoAllWrapper{
+                padding: 0px $MarPad;
+
+                >div.nameWrapper{
+                    margin-bottom: 40px;
+                    >div.titleWrapper{
+                        margin-bottom: 10px;
+
+                        >div.titleUp{
+                            @include flex(flex-start);
+                            >h2.title1{ //distbNm //유통명1
+                                @include font(2.5rem, 600, black);
+                                margin-right: 12px;
+                            }//h2
+                            >ul.eclgyCodeNm{
+                                @include flex(flex-start);
+                                height: 32px;
+                                >li{
+                                    &:not(:last-child){
+                                        margin-right: 5px;
+                                    }
+
+                                    border-radius: 50px;
+                                    padding: 6px 15px; 
+                                    background: $mainColor1;
+                                    @include font(1rem, 700, white);
+                                }
+                            }//ul.eclgyCodeNm
+                        }//div.titleUp
+                        >strong.title2{//distbNm //유통명2
+                            @include font(2rem, 600, black);
+                        }
+                    }//div.titleWrapper
+
+                    >span.plntzrNm{//식물영명
+                        display: inline-block;
+                        @include font(1rem, 500, #555);
+                        margin-bottom: 7px;
+                    }
+                    
+                    >span.plntbneNm{//식물학명
+                        @include font(1rem, 500, $grayColor1);
+
+                    }
+                }//div.nameWrapper
+
+
+                >div.basicToxctyInfoWrapper{
+                    >span.toxctyWarning{
+                        @include flex();
+                        border-radius: 50px;
+                        padding: 6px 20px;
+                        display: inline-block;
+                        background-color: #785E99;
+                        @include font(1rem, 700, white);
+                        margin-bottom: 15px;
+
+                        >i.icon{
+                            width: 12px; height: 12px;
+                            margin-right: 10px;
+                            font-weight: normal;
+                        }
+                    }//span.toxctyInfo
+
+                    >table.basicWrapper{
+                        width: 100%;
+                        border-collapse: collapse;
+                        overflow: hidden;
+                        border-radius: 10px;
+                        outline: 2px solid $lightColor1;
+                        margin-bottom: 40px;
+
+                        
+                        >tbody{
+                            border-radius: 10px;
+                            width: 100%; height: 100%; 
+                            overflow: hidden;
+                            >tr{
+                                &:not(:last-child){
+                                    >th{
+                                        border-bottom: 2px solid white;
+                                        width: auto;
+                                    }
+                                    >td{
+                                        border-bottom: 2px solid $lightColor1;
+                                    }
+                                }
+                                >th{
+                                    @include font(1.25rem, 700, white);
+                                    padding: 12px 10px;
+                                    white-space: nowrap;
+                                    background-color: $lightColor1;
+                                }
+                                >td{
+                                    width: 100%;
+                                    padding: 10px 15px;
+                                    @include font(1.25rem, 400, black);
+                                }
+                            }//tr
+                        }//tbody
+                    }//table.basicWrapper
+                }//div.basicToxctyInfoWrapper
+
+
+                >div.infoWrapper{
+
+                    >article.accordion{
+                        border: 2px solid $lightColor1;
+                        border-radius: 10px;
+
+                        overflow: hidden;
+                        &:not(:last-child){ 
+                            margin-bottom: 30px;
+                        }
+
+                        >h3{
+                            background-color: $lightColor1;
+                            padding: 12px 0;
+                            @include flex();
+
+                            @include font(1.25rem, 700, white);
+                            letter-spacing: 2px;
+                            white-space: nowrap;
+                            cursor: pointer;
+                            
+                            >i.icon{
+                                margin-right: 10px;
+                                font-weight: lighter;
+                            }
+                            >span.ri-arrow-drop-down-line{
+                                vertical-align: middle;
+                                font-size: 2rem;
+                                margin-left: 10px;
+                                font-weight: normal;
+                                transition: 0.2s;
+                            }
+                        }//h3
+
+                        >div.accordion{
+                            display: none;
+                            overflow: hidden;
+                            // height: 0px;
+                            transition: 0.5s;
+
+                            >table.infoTable{
+                                display: inline-block;
+                                width: 100%; height: auto;
+                                border-collapse: collapse;
+                                overflow: hidden;
+                                
+                                >tbody{
+                                    >tr{
+                                        &:not(:last-child){ 
+                                            border-bottom: 1px dashed $lightColor1;
+                                    
+                                        }
+
+                                        >th{
+                                            padding: 20px 25px;
+                                            white-space: nowrap;
+                                            @include font(1.25rem, 700, black);
+                                            letter-spacing: 2px;
+                                            @include flex(flex-start, center);
+                                            vertical-align : middle;
+                                            
+                                            >i.icon{
+                                                margin-right: 15px;
+                                                font-weight: normal;
+                                            }
+                                        }
+                                        >td{
+                                            border-left: 1px dashed $lightColor1;
+                                            padding: 20px 17px;
+                                            width: 100%;
+                                            @include font(1rem, 600, black);
+                                            @include text();
+                                            vertical-align : middle;
+
+                                            &.noData{
+                                                background-color: $grayColor3;
+                                            }
+                                            
+                                        }
+        
+                                    }//tr
+                                }//tbody
+                                
+                                
+                            }//table
+                        }
+
+
+                        // 꽃이랑 열매 아이콘 이미지
+                        &.colorInfoAccordion, &.periodInfoAccordion{
+                            div.accordion{
+                                tr:nth-of-type(1){
+                                    i.icon{
+                                        display: inline-block;
+                                        width: 22px; height: 22px;
+                                        background: url('/img/icon_flower.svg') center center / 100% 100% no-repeat scroll;
+                                    }
+                                }//첫번째 tr
+                                tr:nth-of-type(2){
+                                    i.icon{
+                                        display: inline-block;
+                                        width: 22px; height: 22px;
+                                        background: url('/img/icon_fruit.svg') center center / 100% 100% no-repeat scroll;
+                                    }
+                                }//첫번째 tr
+                            }
+                        }
+                        
+                        // 아코디언 active 상태
+                        &.active{
+                            >h3{
+                                >span.ri-arrow-drop-down-line{
+                                    transform: rotate(180deg);
+                                }
+                            }
+                            >div.accordion{
+                                // height: auto;
+                                display: inline-block;
+
+                            }
+                        }
+
+                    }//article
+
+
+                    >article.colorInfoAccordion{
+                        td{
+                            
+                            >span.colorPoint{
+                                display: inline-block; border-radius: 50%;
+                                width: 10px; height: 10px;
+                                background-color: gray;
+                                margin-right: 10px;
+                            }
+                        }
+                        
+                    }//article.colorInfoAccordion
+
+                }//div.infoWrapper
+
+
+            }//section.infoWrapper
+                
+
+        }//div.detail
+
+        >div.calender{
+            width: 100%; min-height: 100%;
+            padding: 112px 0 100px; 
+
+            >div.calenderWrapper{
+                position: fixed; top: 0; left: 0;
+                width: 100%;  max-width: 780px;
+                background: #FFF;
+                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+                padding: 20px $MarPad;
+                @include flex();
+
+                >div.contentsWrapper{
+                    @include flex();
+                    width: 100%; height: 40px;
+                    // outline: 1px solid red;
+                    >i.calenderIcon{
+                        @include font(2rem, middle, #555);
+                    }
+                    >div.react-datepicker-wrapper{
+                        width: 100%; margin: 0 20px;
+                        >div.react-datepicker__input-container{
+                            width: 100%;
+                            >input[type="text"]{
+                                border: 1px solid #555; border-radius: 50px;
+                                background: url('/img/icon_selectArrow.svg') calc(100% - 20px) 50% / 8px no-repeat scroll;
+                                width: 100%; height: 100%;
+                                padding: 10px 20px;
+    
+                                @include font(1rem, 700, #555);
+                            }
+                        }//div.react-datepicker__input-container
+                    }
+                    >button.toPlantType{
+                        border: none; border-radius: 50px;
+
+                        @include flex();
+                        white-space: nowrap;
+                        height: 100%; 
+                        padding: 0 12px;
+
+                        @include font(1rem, 500, white);
+                        letter-spacing: 1.4px;
+                        background-color: $lightColor1;
+                        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+                        
+                        >i.ri-plant-line{
+                            margin-right: 7px;
+                        }
+
+                    }//button.toPlantType
+                }//div.contentsWrapper
+            }// div.calenderWrapper
+
+            >ul.recordItemsWrapper{
+                padding: 0px $MarPad;
+
+                >li.recordItem{
+                    border: 1px solid #999;
+                    border-radius: 10px;
+                    
+                    background: #FFF;
+                    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+                    
+                    @include flex(space-between);
+                    padding: 20px;
+                    margin-bottom: 15px;
+                    
+                    cursor: pointer;
+
+                    >div.leftWrapper{
+
+                        @include flex(flex-start);
+
+                        >i.imgWrapper{
+                            width: 60px; height: 60px;
+                            border-radius: 50%;
+                            margin-right: 20px;
+                            overflow: hidden;
+                            
+                            background: $lightColor2 url("/img/icon_leaves_white.svg") center center / 30% no-repeat scroll;
+                            >img{
+                                width: 100%; height: 100%;
+                            }
+                        }//i.imgWrapper
+                        
+                        >strong.plantNick{
+                            margin-right: 5px;
+                            @include font(1.25rem, 700, black);
+                            white-space: nowrap;
+                            
+                        }//strong.plantNick
+                        
+                        >b.plantName{
+                            margin-right: 10px;
+                            @include font(1rem, 500, $grayColor1);
+                            white-space: nowrap;
+
+                        }
+                    }//div.leftWrapper
+
+
+                    >div.rightWrapper{
+                        @include flex(){
+                            flex-wrap: wrap;
+                        }
+                        >dl.firstGroup{
+                            @include flex(){
+                                flex-direction: column;
+                            }
+                            margin-right: 12px;
+                            @include font(0.75rem, 500, $grayColor1);
+                            >dt{
+                            }
+                            >dd{
+                               color: $grayColor2
+                            }
+                        }//dl.firstGroup
+
+                        >span.dayOffset{
+                            padding: 4px 10px;
+                            background-color: $grayColor1;
+                            border-radius: 50px;
+                            
+                            @include font(1.25rem, 700, white);
+                            white-space: nowrap;
+                        }
+                    }//div.rightWrapper
+
+                }//li.recordItem
+            }//ul.recordItemsWrapper
+
+            >a.addJournal{
+                position: fixed; bottom: 150px; right: 30px;
+                width: 90px; height: 90px;
+                border: none; border-radius: 50px;
+
+                background-color: $mainColor1;
+                box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
+                @include flex();
+                text-decoration: none;
+
+                @include font(2.5rem, nomal, white);
+
+            }//button.addRecord
+        }//div.calender
+
+        >div.calenderRead{
+            width: 100%; min-height: 100%;
+
+
+            >div.ReadImgSwiperWrapper{
+                width: 100%; height: 450px;
+                background-color: $grayColor3;
+                padding: 0 $MarPad;
+                position: relative; top: 0; left: 0; z-index: 0; //버튼을 보이게 하기 위해 부모를 바꿈(꼼수)
+
+                >div.ReadImgSwiper{
+                    height: 100%;
+                    overflow: hidden;
+
+
+                    >div.swiper-wrapper{
+                        height: 100%;
+                        @include flex(flex-start);
+                        >.swiper-slide{
+                            width: 100%; height: 100%;
+                            flex-shrink: 0;
+
+                            cursor: pointer;
+
+                            >img{
+                                width: 100%; height: 100%;
+                                object-fit: cover;
+
+                            }
+                        }
+                    }//div..swiper-wrapper
+
+                    >div.swiper-button-prev{
+                        position: absolute; top: 50%; left: calc(0% + $MarPad); transform: translate(-100%, -50%);
+                        width: 50px; height: 50px;
+                        background: url('/img/icon_leftArrow.svg') center center / 100% 100% no-repeat scroll;
+
+                        cursor: pointer;
+                    }//div.swiper-button-prev
+                    
+                    >div.swiper-button-next{
+                        position: absolute; top: 50%; right: calc(0% + $MarPad); transform: translate(100%, -50%);
+                        width: 50px; height: 50px;
+                        background: url('/img/icon_rightArrow.svg') center center / 100% 100% no-repeat scroll;
+
+                        cursor: pointer;
+
+                    }//swiper-button-next
+
+                }//div.ReadImgSwiper
+            }//div.ReadImgSwiperWrapper
+
+            >div.contentsWrapper{
+                padding: 0px $MarPad;
+
+                >form.contentsHeadWrapper{
+                    width: 100%; height: 100px;
+                    // outline: 1px solid red;
+                    @include flex(space-between){
+                        flex-wrap: wrap;
+                    };
+
+                    >select.plantDate{
+                        flex-shrink: 0;
+                        border: 1px solid $grayColor1;
+                        border-radius: 7px;
+                        @include font(1rem, bold, #555);
+                        width: 132px;
+                        padding: 6px 10px;
+
+                        -o-appearance: none;
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background: white url('/img/icon_selectArrow.svg') calc(100% - 10px) 50% / 8px no-repeat scroll;
+                        cursor: pointer;
+
+                        &:focus{
+                            outline: none;
+                        }
+                        >option{}
+                    }//select.plantDate
+
+
+                    >div.nameWrapper{
+                        @include flex(){flex-direction: column;}
+                        >strong.plantNick{
+                            @include font(1.5rem, 600, black);
+                            letter-spacing: 2.4px;
+                            white-space: nowrap;
+                            margin-left: 10px;
+                        }
+                        >b.plantName{
+                            @include font(1rem, 500, $grayColor1);
+                            white-space: nowrap;
+                            
+                        }
+
+                    }//div.nameWrapper
+
+
+                    >div.dateInfoWrapper{
+                        @include flex(){
+                            flex-wrap: wrap;
+                        }
+                        >dl.firstGroup{
+                            @include flex(){
+                                flex-direction: column;
+                            }
+                            margin-right: 12px;
+                            @include font(0.75rem, 500, $grayColor1);
+                            >dt{
+                            }
+                            >dd{
+                               color: $grayColor2
+                            }
+                        }//dl.firstGroup식물의 이름을 넣어주세요
+
+                        >span.dayOffset{
+                            padding: 4px 10px;
+                            background-color: $grayColor1;
+                            border-radius: 50px;
+                            
+                            @include font(1.25rem, 700, white);
+                            white-space: nowrap;
+                        }
+                    }//div.rightWrapper
+
+                }//form.contentsHeadWrapper
+      
+                >div.textWrapper{
+                    height: 450px;
+                    background-color: white;
+                    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25) inset;
+                    padding: 25px 20px;
+                    @include font(1.2rem, 500, #555);
+
+                    @include text();
+                }   
+            }//div.contentsWrapper
+
+            >div.btnWrapper{
+                position: fixed; bottom: 150px; right: 30px;
+                height: 60px;
+                // outline: 1px solid red;
+                @include flex(flex-end);
+
+                >button{
+                    &:first-child{
+                        margin-right: 7px;
+                    }
+                    width: 60px; height: 100%; border-radius: 50%;
+                    padding: 18px;
+                    @include flex();
+                    border: none;
+                    >i{
+                        flex-shrink: 0;
+                        @include font(2rem, normal, white);
+                    }
+
+                    &.modifyRecord{
+                        margin-bottom: 5px;
+                        background-color: $mainColor1;
+                        
+                    }//button.modifyRecord
+                    &.deleteRecord{
+                        background-color: $mainColor2;
+    
+                    }//button.modifyRecord
+                }
+            }
+
+
+
+
+
+
+
+
+        }//div.calenderRead
+
+        >div.calenderWrite{
+            width: 100%; min-height: 100%;
+            padding: 30px $MarPad;
+
+            >form.contents{
+
+                >div.dateWrapper{
+                    margin-bottom: 30px;
+                    >span.explanationTxt{
+                        @include font(1.25rem, 500, black);
+                    }
+                    
+                    >div.inputWrapper{
+                        margin-top: 15px;
+                        @include flex();
+                        >i.icon{
+                            @include font(2.2rem, normal, #555);
+                            margin-right: 18px;
+                        }
+                        >div.react-datepicker-wrapper{
+                            width: 100%;
+                            >div.react-datepicker__input-container{
+                                width: 100%;
+                                >input[type="text"]{
+                                    border: 1px solid #555; border-radius: 10px;
+                                    background: url('/img/icon_selectArrow.svg') calc(100% - 20px) 50% / 8px no-repeat scroll;
+                                    width: 100%; 
+                                    padding: 15px 20px;
+        
+                                    @include font(1rem, 700, #555);
+                                }
+                            }//div.react-datepicker__input-container
+                        }// div.react-datepicker-wrapper
+                    }//div.inputWrapper
+                }//div.dateWrapper
+
+                >div.inputAllWrapper{
+                    margin-bottom: 30px;
+
+                    >span.explanationTxt{
+                        @include font(1.25rem, 500, black);
+                    }
+
+                    >.inputWrapper{
+                        margin-top: 15px;
+                        @include flex();
+                        >label.icon{
+                            @include font(2.2rem, normal, #555);
+                            margin-right: 18px;
+                        }
+
+                        >input{
+                            border: 1px dashed #555; border-radius: 10px;
+                            background: white;
+                            width: 100%;
+                            padding: 15px 20px;
+                            @include font(1rem, 700, #555);
+                        }
+                    }
+                }//div.inputWrapper
+
+
+                >div.mainTxtWrapper{
+                    margin-bottom: 30px;
+                    >span.explanationTxt{
+                        @include font(1.25rem, 500, black);
+                    }
+                    >textarea{
+                        margin-top: 15px;
+                        border: 1px dashed #555; border-radius: 10px;
+                        background: white;
+                        width: 100%;
+                        padding: 25px;
+                        @include font(1rem, 700, #555);
+
+                        &:focus{
+                            outline: none;
+                        }
+
+                        &::placeholder{
+                            opacity: 70%;
+                        }
+                    }
+                }//div.mainTxtWrapper
+
+
+                >div.ImgWrapper{
+                    >div.inputWrapper{
+                        @include flex(flex-start, flex-end);
+                        margin-bottom: 10px;
+                        >label.icon{
+                            border-radius: 10px;
+                            border: 1px dashed #555;
+                            background: #FFF;
+                            width: 60px; height: 60px;
+                            @include flex();
+                            @include font(1.5rem, normal ,#555);
+
+                            cursor: pointer;
+                        }
+                        >input{
+                            display: none;
+                        }
+                        >span.imgLimit{
+                            display: inline-block;
+                            margin-left: 10px;
+                            @include font(1rem, 700, #555);
+                            letter-spacing: 1.6px;
+                            >code{}
+                        }
+                    }//div.inputWrapper
+                    >ul{
+                        @include flex(flex-start);
+                        width: auto;
+                        >li{
+                            display: inline-block;
+                            margin-right: 5px;
+                            border: 1px solid $grayColor3;
+                            width: 70px; height: 70px;
+                            >img{
+                                width: 100%; height: 100%;
+                            }
+                        }
+                    }
+                }//div.ImgWrapper
+
+
+                >button.submitBtn{
+                    float: right;
+                    border: none; border-radius: 10px;
+                    padding: 10px 15px;
+                    background-color: $lightColor1;
+                    @include font(1.25rem, 700, white);
+                    letter-spacing: 2px;
+
+                    >i.icon{
+                        display: inline-block;
+                        font-weight: normal;
+                        margin-right: 7px;
+                    }
+
+                }//button.submitBtn
+
+            }//form.contents
+        }//div.calenderWrite
+
+    }//main // layout.js
+
+    >footer{
+        display: none;
+        position: fixed; bottom: 0; left: 0; z-index: 100;
+        width: 100%; max-width: 780px;
+        background-color: white;
+        border-radius: 35px 35px 0 0;
+        padding: 25px 70px;
+
+        box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
+        //filter: drop-shadow(0px -4px 4px 0px rgba(0, 0, 0, 0.25));
+
+        &.active{
+            display: inline-block;
+
+        }
+
+        >div.contents{
+            position: relative; top: 0; left: 0; z-index: 0;
+            @include flex(space-between);
+            >a{
+                width: 70px; height: 70px;
+            }
+
+            >a.homeLink{
+                background: url('/img/icon_home.svg') center center / 100% 100% no-repeat scroll;
+            }
+            >div.preferencesWrapper{
+                position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
+                width: 160px; height: 160px;
+                background-color: white; border-radius: 50%;
+                padding: 14px;
+                box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
+
+                button.preferences{
+                    border: none;
+                    width: 100%; height: 100%;
+                    background: url('/img/icon_logo.svg') center center / 100% 100% no-repeat scroll;
+
+                }
+            }
+            >a.calenderLink{
+                background: url('/img/icon_edit.svg') center center / 100% 100% no-repeat scroll;
+            }
+        }
+
+        
+    }//footer
+
+    >div.searchLoadingWrapper{
+        display: none;
+        position: absolute; top: 0; left: 0; z-index: 999;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        justify-content: center;
+        align-items: center;
+        
+        &.active{
+            display: flex;
+        }
+
+        >img{
+            width: 30%;
+            animation: loading_ani 2s linear infinite;
+        }
+
+    }//div.searchLoadingWrapper
+
+
+
+    div.react-datepicker{
+        border: 1px solid $grayColor1;
+        overflow: hidden;
+        >div.react-datepicker__triangle{
+            display: none;
+        }
+
+        >span.react-datepicker__aria-live{
+            
+        }
+        
+        >button.react-datepicker__navigation{
+            
+            span{
+                &::before{
+                    border-color: #fff;
+                    border-width: 2px 2px 0 0;
+                }
+
+            }
+            &.react-datepicker__navigation--previous{
+                >span{
+                }
+            }
+            
+            &.react-datepicker__navigation--next{
+                >span{
+                }
+            }
+        } 
+
+
+        //달력
+        >div.react-datepicker__month-container{
+
+            // 헤더)
+            >div.react-datepicker__header{
+                border: none;
+                border-radius: 0;
+                background-color: $mainColor1;
+                >.react-datepicker__current-month{
+                    color: white;
+
+                    &::before{
+                        display: inline-block;
+                        content: '';
+                        width: 12px; height: 12px;
+                        background: url('/img/icon_leaves_white.svg') center center / 100% 100% no-repeat scroll;
+                        margin-right: 5px;
+                    }
+                }
+                
+                // 요일들
+                .react-datepicker__day-names{
+                    .react-datepicker__day-name{ // 요일
+                        color: white;
+                    }
+                }
+                 
+
+            }//div.react-datepicker__header // 헤더)
+            
+            // 몸통)
+            >div.react-datepicker__month{
+                // 모든 날짜
+                .react-datepicker__day{
+                    &:hover{
+                        background-color: rgba(224, 227, 210, 0.5);
+                    }
+                }  
+
+                
+                //오늘
+                .react-datepicker__day--today{
+                    background-color: $lightColor2; border-radius: 50%;
+                    font-weight: normal;
+                    // color: white
+                    
+                }
+                
+                // 선택한 날짜
+                .react-datepicker__day--selected, .react-datepicker__day--keyboard-selected{
+                    background-color: $lightColor1; border-radius: 50%;
+                    font-weight: bold;
+                    // color: black;
+                }
+            }//div.react-datepicker__month // 몸통)
+
+        }//div.react-datepicker__month-container
+        
+    }//div.react-datepicker
+}// div.all

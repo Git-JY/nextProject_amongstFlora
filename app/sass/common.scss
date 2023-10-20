@@ -1,0 +1,79 @@
+// 1. 폰트들)
+
+// SUITE
+@font-face {
+    font-family: 'SUITE-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
+// zcoll XiaoWel
+@font-face {
+    font-family: 'ZCOOL XiaoWei';
+    src: url('../font/ZCOOLXiaoWei-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+//   
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 2. 폰트 아이콘들)
+
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 3. mixin)
+
+@mixin flex($x:center, $y:center){
+    display: flex;
+    justify-content: $x;
+    align-items: $y;
+
+    @content;
+}
+
+@mixin font($a:inherit, $b:inherit, $c:inherit){
+    font-size: $a;
+    font-weight: $b;
+    color: $c;
+
+    @content;
+}
+
+@mixin text(){
+    word-break: keep-all;
+    word-wrap: break-word;
+    @content;
+}
+
+@mixin english(){
+    font-family: 'ZCOOL XiaoWei';
+    @content;
+}
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 4. color)
+$mainColor1: #5E9972;
+$mainColor2: #657558;
+$mainColor3: #C18D63;
+
+$lightColor1: #A7B59A;
+$lightColor2: #E0E3D2;
+$lightColor3: #F9F3E5;
+
+$grayColor1: #999999;
+$grayColor2: #AAAAAA;
+$grayColor3: #D9D9D9;
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 5. 변수들)
+$MarPad: 12.5%;
+
+// ===== ===== ===== ===== ===== ===== ===== ===== ===== =====
+// 5. 애니메이션)
+@keyframes loading_ani {
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg)}
+}
+
