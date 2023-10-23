@@ -48,19 +48,21 @@ export default function search() {
 
     }//moveTo() 함수정의
 
-    let pos = {y: 0, y2: 0, status: true};
-    window.addEventListener('scroll', function(){
-        pos.y = window.pageYOffset;
+    if(window){ //window를 나중에 인식
+        let pos = {y: 0, y2: 0, status: true};
+        window.addEventListener('scroll', function(){
+            pos.y = window.pageYOffset;
 
-        pos.status = (pos.y > pos.y2) ? true : false; // 3항 연산자
+            pos.status = (pos.y > pos.y2) ? true : false; // 3항 연산자
 
-        if(pos.status){headerUp.current.classList.add('up')} //id값은 querySelector로 안 잡아도 바로 인식가능
-        else{headerUp.current.classList.remove('up');}
+            if(pos.status){headerUp.current.classList.add('up')} //id값은 querySelector로 안 잡아도 바로 인식가능
+            else{headerUp.current.classList.remove('up');}
 
-        pos.y2 = pos.y;
-    });
+            pos.y2 = pos.y;
+        });
 
-    console.log('잘 가져오셨으???: ', items);
+        console.log('잘 가져오셨으???: ', items);
+    }
 
   return (
     <div className='contentsWrapper'>
