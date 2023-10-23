@@ -11,7 +11,6 @@ export const Mycontext = createContext();
 export default function Context({children}) {
 
   let [visual, setVisual] = useState('');
-  let [footVisual, setFootVisual] = useState('');
   let [searchLoading, setSearchLoading] = useState('');
   let [items, setItems] = useState([]);
   let [detailObj, setDetailObj] = useState('');
@@ -38,12 +37,11 @@ export default function Context({children}) {
         headerUp, 
         setDetailObj, 
         detailObj, 
-        imgsToDetail,
-        setFootVisual}}>
+        imgsToDetail}}>
           {children}
       </Mycontext.Provider>
 
-      <footer className={`${visual} ${footVisual}`}>
+      <footer className={visual}>
         <Footer />
       </footer>
     </div>

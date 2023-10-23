@@ -8,8 +8,7 @@ export default function Detail() {
   const {setVisual, detailObj, setFootVisual} = useContext(Mycontext);
 
   useEffect(()=>{
-    setVisual('');
-    setFootVisual('active');
+    setVisual('noHeader');
 
     console.log('detailObj: ', detailObj);
 
@@ -104,15 +103,15 @@ export default function Detail() {
                 <tbody>
                   <tr>
                     <th><i className='icon'></i>꽃 색</th>
-                    <td><span className='colorPoint'/>{detailObj?.flclrCodeNm._cdata}</td>
+                    <td>{/* <span className='colorPoint'/> */}{detailObj?.flclrCodeNm._cdata}</td>
                   </tr>
                   <tr>
                     <th><i className='icon'></i>열 매 색</th>
-                    <td><span className='colorPoint'/>{detailObj?.fmldecolrCodeNm._cdata}</td>
+                    <td>{/* <span className='colorPoint'/> */}{detailObj?.fmldecolrCodeNm._cdata}</td>
                   </tr>
                   <tr>
                     <th><i className='icon ri-seedling-line' />잎 색</th>
-                    <td><span className='colorPoint'/>{detailObj?.lefcolrCodeNm._cdata}</td>
+                    <td>{/* <span className='colorPoint'/> */}{detailObj?.lefcolrCodeNm._cdata}</td>
                   </tr>
                 </tbody>
               </table>

@@ -51,6 +51,7 @@ export default function Header({setSearchLoading, setItems}) {
         setItems([...itemArr]);
         
     }
+    elHeaderForm.current.classList.remove('active');
     navigation.push('/page/search');
 
   }//searchFun(e) 함수정의

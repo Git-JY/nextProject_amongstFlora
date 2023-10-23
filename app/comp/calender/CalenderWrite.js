@@ -4,10 +4,16 @@ import { getYear, getMonth, getDate, getDay } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from 'next/navigation';
 
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios";
+import { Mycontext } from "@/app/Context";
 
 export default function CalenderWrite() {
+    const {setVisual} = useContext(Mycontext);
+    useEffect(()=>{
+        setVisual('noHeader');
+    }, []);
+
     const [startDate, setStartDate] = useState(new Date());
     const [plantImg, setPlantImg] = useState([]);
     const navigation = useRouter();
@@ -24,7 +30,7 @@ export default function CalenderWrite() {
         }
         
         const reader = new FileReader();
-        //console.log('타입: ',typeof(elForm.plantImg.files[0]));
+        console.log('타입: ',elForm.plantImg.files);
         reader.readAsDataURL(elForm.plantImg.files[0]);// 읽는데 시간이 걸림
         
         reader.addEventListener('load', () => {//이미지를 읽는 시간
@@ -59,7 +65,10 @@ export default function CalenderWrite() {
         
         
         <div className='nickWrapper inputAllWrapper'>
-            <span className='explanationTxt'>식물의 별칭을 넣어주세요<i className="icon"/></span>
+            <span className='explanationTxt'>
+                식물의 별칭을 넣어주세요
+                <i className="infoIcon ri-information-line" title="별칭은 식물을 구별하는 키가 됩니다. 이미 한 번 썼던 식물 이름은 다시 쓸 수 없습니다."/>
+            </span>
             <div className='inputWrapper'>
                 <label className='icon ri-leaf-line' htmlFor='plantNick' />
                 <input type="text" name="plantNick" id="plantNick" maxLength='20' placeholder="(필수) * 0~20까지 가능합니다."/>

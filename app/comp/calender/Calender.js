@@ -1,14 +1,17 @@
 "use client"
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { getYear, getMonth, getDate, getDay } from 'date-fns'; // datepicker에서 주는 날짜객체의 날짜 받는 법 // npm 이나 git에 이런 거 가이드 안나옴 // 검색해서 찾아보삼
 import "react-datepicker/dist/react-datepicker.css";
 import Link from 'next/link'
 import axios from "axios";
 import { useRouter } from 'next/navigation';
+import { Mycontext } from "@/app/Context";
 
 
 export default function Calender() {
+    const {setVisual} = useContext(Mycontext);
+
     const [startDate, setStartDate] = useState(new Date());
     const [item, setItem] = useState([]);
     const navigation = useRouter();
@@ -17,7 +20,7 @@ export default function Calender() {
         let currentMember = JSON.parse(localStorage.getItem('member_info'));
         let dateStr = `${getYear(startDate)}-${getMonth(startDate)+1}-${getDate(startDate)}`;
     
-        let data = await axios.get(`/api/journal?currentId=${currentMember.id}&selectDate=${dateStr}`);
+        const data = await axios.get(`/api/journal?currentId=${currentMember.id}&selectDate=${dateStr}`);
         console.log('DB에서 가져온 거: ', data.data);
         setItem([...data.data]);
     }//ListShowFun() 함수정의 //async을 useEffect의 콜백함수에 쓸 수 없어서 이렇게 씀
@@ -33,9 +36,14 @@ export default function Calender() {
     const toJournal = (obj) => {
         let currentMember = JSON.parse(localStorage.getItem('member_info'));
 
-        navigation.push(`/page/calender/calenderRead?id=${currentMember.id}&plantNick=${obj.plantNick}&date=${obj.journalDate}`);
+        // navigation.push({pathname: url, query: {}})로 보내는 방법은 
+        // next12에서는 되는데 next13부터 안된다고 함
+        navigation.push(`/page/calender/calenderRead?id=${currentMember.id}&plantNick=${obj.plantNick}&journalDate=${obj.journalDate}`); 
     }//toJournal() 함수정의
 
+    useEffect(()=>{
+        setVisual('noHeader');
+    }, []);
     useEffect(() => {ListShowFun()}, [startDate]);
   
   return (

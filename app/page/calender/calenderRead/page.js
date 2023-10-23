@@ -8,13 +8,11 @@ export default function page() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
   const plantNick = searchParams.get('plantNick');
-  const date = searchParams.get('date');
-
-  console.log('잘 가져오심?: ', id, plantNick, date);
+  const journalDate = searchParams.get('journalDate');
 
   return (
     <div className='calenderRead'>
-        <CalenderRead />
+        <CalenderRead id={id} plantNick={plantNick} journalDate={journalDate}/>
     </div>
   )
 }
