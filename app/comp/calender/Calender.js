@@ -41,6 +41,14 @@ export default function Calender() {
         navigation.push(`/page/calender/calenderRead?id=${currentMember.id}&plantNick=${obj.plantNick}&journalDate=${obj.journalDate}`); 
     }//toJournal() 함수정의
 
+    const sliceFun = (srcStr='') => {
+        const arr = srcStr.split('.....');
+        console.log('==============', arr);
+
+        return arr[0];      
+
+    }//sliceFun() 함수정의
+
     useEffect(()=>{
         setVisual('noHeader');
     }, []);
@@ -63,7 +71,7 @@ export default function Calender() {
                     <li key={k} className="recordItem" onClick={()=>{toJournal(obj)}}>
                         <div className="leftWrapper">
                             <i className="imgWrapper">
-                                <img src={obj.img} alt="첫번째 사진 이미지"/>
+                                <img src={sliceFun(obj.img)} alt="첫번째 사진 이미지"/>
                             </i>
                             <strong className="plantNick">{obj.plantNick}</strong>
                             <b className="plantName">{obj.plantName}</b>

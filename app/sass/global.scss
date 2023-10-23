@@ -1488,6 +1488,7 @@ div.all{
         >div.calenderRead{
             width: 100%; min-height: 100%;
             padding-bottom: 140px;
+            background-color: white;
 
 
             >div.ReadImgSwiperWrapper{
@@ -1816,6 +1817,31 @@ div.all{
             }//form.contents
         }//div.calenderWrite
 
+        >div.preferences{
+            padding-top: 45px;
+            >ul.contents{
+                width: 100%;
+                border-top: 1px solid $grayColor3;
+                
+                >li{
+                    border-bottom: 1px solid $grayColor3;
+
+                    width: 100%; height: 84px;
+                    @include flex(flex-start);
+                    >button{
+                        padding: 30px;
+                        width: 100%; height: 100%;
+                        text-align: left;
+                        background-color: white;
+                        border: none;
+                        @include font(1.25rem, 600, black);
+                        white-space: nowrap;
+
+                    }
+                }//li
+            }//ul.contents
+        }//div.preferences
+
     }//main // layout.js
 
     >footer{
@@ -1855,7 +1881,8 @@ div.all{
                 padding: 14px;
                 box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
 
-                button.preferences{
+                a.preferences{
+                    display: inline-block;
                     border: none;
                     width: 100%; height: 100%;
                     background: url('/img/icon_logo.svg') center center / 100% 100% no-repeat scroll;

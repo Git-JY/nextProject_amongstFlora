@@ -10,6 +10,7 @@ export default function CalenderRead({id, plantNick, journalDate}) {
     //console.log('가져오심???: ', id, plantNick, journalDate);
     let [selectedDate, setSelectedDate] = useState(journalDate);
     const [journalObj, setJournalObj] = useState([]);
+    const [imgs, setImgs] = useState([]);
     const plantJournalArr = useRef([]);
     const elSelectDate = useRef();
 
@@ -27,7 +28,16 @@ export default function CalenderRead({id, plantNick, journalDate}) {
         setJournalObj(currentObj[0]);
     }//ListShowFun() 함수정의 //async을 useEffect의 콜백함수에 쓸 수 없어서 이렇게 씀
 
-    useEffect(() => {takeObjFun()}, [selectedDate]);
+    const sliceFun = (srcStr='') => {
+        let arr = srcStr.split('.....');
+        
+        return arr;
+  
+    }//sliceFun() 함수정의
+
+    useEffect(() => {
+        takeObjFun();
+    }, [selectedDate]);
 
     const dayOffsetFun = (day) => {
         const firstDay = new Date(day);
@@ -61,6 +71,7 @@ export default function CalenderRead({id, plantNick, journalDate}) {
     }//deleteFun() 함수정의
 
 
+
   return (
     <>
         <div className='ReadImgSwiperWrapper'> 
@@ -70,9 +81,14 @@ export default function CalenderRead({id, plantNick, journalDate}) {
             modules={[Navigation]}
             loop={true} 
             >
-                <SwiperSlide>
-                    <img src={journalObj.img} alt='식물 사진1'/>
-                </SwiperSlide>
+                {
+                    sliceFun(journalObj.img).map((src, k) => (
+                        <SwiperSlide key={k}>
+                            <img src={src} alt='식물 사진1'/>
+                        </SwiperSlide>
+                    ))
+
+                }
             
             </Swiper>
         </div>

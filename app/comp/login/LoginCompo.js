@@ -14,6 +14,10 @@ export default function LoginCompo() {
   
   const navigation = useRouter();
   const {setVisual} = useContext(Mycontext);
+
+    const kakaoLoginFun = () => {
+
+    }//kakaoLoginFun() 함수정의
   
     useEffect(()=>{
       let login_bool = localStorage.getItem('login_bool');
@@ -52,7 +56,7 @@ export default function LoginCompo() {
             </h1>
 
             <div className="loginWrapper">
-            <button type="button" className="kakaoLogin">
+            <button type="button" className="kakaoLogin" onClick={kakaoLoginFun()}>
                 카카오로 계속하기
             </button>
             <button type="button" className="nomalLogin" onClick={() => {popupActiveFun(true)}}>

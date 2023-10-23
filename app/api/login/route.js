@@ -20,3 +20,9 @@ export async function POST(req){
     await queryExecute(q, [data.id, data.pw, data.nick, data.date]);
     return Response.json({done: '성공!!!'});
 }
+
+export async function DELETE(req){
+    const memberId = req.nextUrl.searchParams.get('id');
+    const q = `delete from Login_member where id=?`;
+    await queryExecute(q, [memberId]);
+}

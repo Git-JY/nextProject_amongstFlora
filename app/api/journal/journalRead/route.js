@@ -12,3 +12,9 @@ export async function GET(req){
     return Response.json(data);  
     // return Response.json(data);  
 }
+
+export async function DELETE(req){
+    const memberId = req.nextUrl.searchParams.get('id');
+    const q = `delete from member_journal where id=?`;
+    await queryExecute(q, [memberId]);
+}

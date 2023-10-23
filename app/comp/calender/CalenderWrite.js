@@ -29,24 +29,38 @@ export default function CalenderWrite() {
             journalDate: `${getYear(startDate)}-${getMonth(startDate)+1}-${getDate(startDate)}`,
         }
         
-        const reader = new FileReader();
-        console.log('타입: ',elForm.plantImg.files);
-        reader.readAsDataURL(elForm.plantImg.files[0]);// 읽는데 시간이 걸림
+        // const reader = new FileReader();
+        // console.log('타입: ',elForm.plantImg.files);
+        // reader.readAsDataURL(elForm.plantImg.files[0]);// 읽는데 시간이 걸림
         
-        reader.addEventListener('load', () => {//이미지를 읽는 시간
-            console.log('reader.result', reader.result);
-            fd.plantImg = reader.result;
+        // reader.addEventListener('load', () => {//이미지를 읽는 시간
+        //     console.log('reader.result', reader.result);
+        //     fd.plantImg = reader.result;
 
-            console.log('폼 데이터 객체: ');
-            console.log(fd);
+        //     console.log('폼 데이터 객체: ');
+        //     console.log(fd);
 
-            let currentMember = JSON.parse(localStorage.getItem('member_info'));
+        //     let currentMember = JSON.parse(localStorage.getItem('member_info'));
     
-            axios.post('/api/journal/journalWrite', {formData: fd, currentId: currentMember.id});
-            navigation.push('/page/calender');
+        //     axios.post('/api/journal/journalWrite', {formData: fd, currentId: currentMember.id});
+        //     navigation.push('/page/calender');
 
     
-        })//reader.addEventListener('load', fun)
+        // })//reader.addEventListener('load', fun)
+        
+        
+
+        console.log('plantImg', plantImg);
+        fd.plantImg = plantImg;
+
+        console.log('폼 데이터 객체: ');
+        console.log(fd);
+
+        let currentMember = JSON.parse(localStorage.getItem('member_info'));
+
+        axios.post('/api/journal/journalWrite', {formData: fd, currentId: currentMember.id});
+        navigation.push('/page/calender');
+
 
 
 

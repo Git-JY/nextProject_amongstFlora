@@ -7,7 +7,7 @@ export default function Footer() {
         <div className='contents'>
             <Link href="/page/home" className='homeLink'></Link>
             <div className='preferencesWrapper'>
-                <button type='button' className='preferences'></button>
+                <Link className='preferences' href="/page/preferences"></Link>
             </div>
             <Link href="/page/calender" className='calenderLink'></Link>
         </div>
