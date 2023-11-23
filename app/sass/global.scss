@@ -5,9 +5,8 @@ html{
 }
 
 body{
-    // background-color: url('/img/icon_logo.svg') center center / 30px 30px repeat scroll;
-    background: rgba(224, 227, 210, 0.2) url('/img/icon_logo_back.svg') center center / 70px 70px repeat scroll;
-
+    // background: white url('/img/backTest.jpg') right top / cover no-repeat fixed;
+    background: white url('/img/backTest.jpg') center top / cover no-repeat fixed;
 }
 
 *{
@@ -40,15 +39,14 @@ input{
 
 
 div.all{
-    background-color: white;
     position: relative; top: 0; left: 0; z-index: 0;
-    width: 100%; height: 100vh; max-width: 780px;
-    margin: auto;
+    width: 100%; height: 100vh; max-width: 780px; margin: auto;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+    background-color: white;
     
     >header{
         display: none;
-        position: fixed; top: 0; left: 50%; z-index: 100;
-        transform: translateX(-50%);
+        position: fixed; top: 0; left: 50%; z-index: 100; transform: translateX(-50%);
         width: 100%; max-width: 780px;
         background-color: white;
         filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -72,22 +70,23 @@ div.all{
             >div.searchOption_visual{
                 // outline: 2px solid red;
                 @include flex(){flex-direction: column;}
-                margin: 40px $MarPad 40px;
+                margin: 30px $MarPad;
 
                 >ul.sType_Wrapper{ // 식물명, 학명, 영명
-                    @include flex(space-between);
-                    width: 310px; height: 40px;
+                    @include flex();
+                    height: 34px;
                     margin-bottom: 18px;
                     
                     >li{
-                        width: 90px; height: 100%;
+                        // outline: 1px solid red;
+                        width: 77px; height: 100%;
 
                         >input[type='radio']{display: none;}
                         >label{
                             @include flex();
                             width: 100%; height: 100%;
                             border: 1px solid black; border-radius: 50px;
-                            @include font(1.25rem, 600, inherit);
+                            @include font(1rem, 600, inherit);
                             letter-spacing: 2px;
                             box-shadow: 0px 4px 2px 0px rgba(0, 0, 0, 0.25);
 
@@ -97,54 +96,58 @@ div.all{
                             color: white;
                             box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25) inset;
                         }
+
+                        &:nth-child(1){
+                            >label{
+                                border-color: $mainColor1;
+                                color: $mainColor1;
+                            }
+                            >input:checked + label{
+                                background-color: $mainColor1;
+                            }
+                        }
+                        &:nth-child(2){
+                            margin: 0px 20px;
+                            
+                            >label{
+                                border-color: $mainColor2;
+                                color: $mainColor2;
+                            }
+                            >input:checked + label{
+                                background-color: $mainColor2;
+                            }
+                        }
+                        &:nth-child(3){
+                            >label{
+                                border-color: $mainColor3;
+                                color: $mainColor3;
+                            }
+                            >input:checked + label{
+                                background-color: $mainColor3;
+                            }
+                        }
                     }//li
 
-                    >li:nth-child(1){
-                        >label{
-                            border-color: $mainColor1;
-                            color: $mainColor1;
-                        }
-                        >input:checked + label{
-                            background-color: $mainColor1;
-                        }
-                    }
-                    >li:nth-child(2){
-                        >label{
-                            border-color: $mainColor2;
-                            color: $mainColor2;
-                        }
-                        >input:checked + label{
-                            background-color: $mainColor2;
-                        }
-                    }
-                    >li:nth-child(3){
-                        >label{
-                            border-color: $mainColor3;
-                            color: $mainColor3;
-                        }
-                        >input:checked + label{
-                            background-color: $mainColor3;
-                        }
-                    }
                 }//ul.sType_Wrapper
 
                 >div.searchWrapper{
+                    // outline: 1px solid red;
                     position: relative; top: 0; left: 0; z-index: 0;
                     @include flex(space-between);
                     width: 100%;
                     border-radius: 50px;
                     background: #D9D9D9;
-                    padding: 0px 30px;
+                    padding: 0px 26px;
 
                     overflow: hidden;
 
                     >input.sTest{
                         border: none; outline: none;
                         width: 100%;
-                        padding: 22px 0px;
+                        padding: 16px 0px;
                         background-color: transparent;
 
-                        @include font(1.25rem, 500, gray);
+                        @include font(1rem, 500, gray);
 
                         &::placeholder{
                             opacity: 80%;
@@ -164,14 +167,16 @@ div.all{
                     }
 
                     >button.searchBtn{
+                        // outline: 1px solid red;
                         border: none;
-                        width: 27px; height: 29px;
-                        background: url('/img/icon_search.svg') center center / 100% 100% no-repeat scroll;
+                        background-color: transparent;
+                        >i{
+                            @include font(1.5rem, normal, #555555);
+                        }
                     }
                 }//div.searchWrapper
 
             }//div.searchOption_hide
-
 
             
             >div.searchOptionScroll_hide{ //스크롤
@@ -183,10 +188,15 @@ div.all{
                 transition: .2s;
 
                 &::-webkit-scrollbar {
-                    display: none;
+                    // display: none;
+                    width: 5px;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: $lightColor1;
+                    border-radius: 10px;
                 }
                 &::-webkit-scrollbar-track {
-                    background: #9b6a2f; /* 스크롤바 뒷 배경 색상 */
+                    background: $lightColor2; /* 스크롤바 뒷 배경 색상 */
                 }
 
                 >ul{
@@ -258,7 +268,7 @@ div.all{
                     }//li.select
 
                     // label 이미지
-                    &:nth-child(2){
+                    &:nth-child(2){// 꽃 색, 열매색, 잎 색
                         >li:nth-child(1){>label{&::before{
                             background: url('/img/icon_flower.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
@@ -269,7 +279,7 @@ div.all{
                             background: url('/img/icon_leaves.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
                     }
-                    &:nth-child(3){
+                    &:nth-child(3){// 잎무늬, 색육형태
                         >li:nth-child(1){>label{&::before{
                             background: url('/img/icon_leaf.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
@@ -278,7 +288,7 @@ div.all{
                         }}}//li
 
                     }
-                    &:nth-child(4){
+                    &:nth-child(4){// 광도요구, 물주기, 꽃피는 계절, 겨울 최저온도
                         >li:nth-child(1){>label{&::before{
                             background: url('/img/icon_sun.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
@@ -286,12 +296,11 @@ div.all{
                             background: url('/img/icon_water.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
                     }
-                    &:nth-child(5){
+                    &:nth-child(5){// 가격대
                         >li:nth-child(1){>label{&::before{
                             background: url('/img/icon_money.svg') center center / 100% 100% no-repeat scroll;
                         }}}//li
                     }
-
 
                 }//ul
 
@@ -345,13 +354,13 @@ div.all{
                         >ul{
                             @include flex(){
                                 flex-wrap: wrap;
-                                flex-shrink: 0;
                                 row-gap: 8px;
                                 column-gap: 15px;
                             }
                             height: 30px;
 
                             li{
+                                flex-shrink: 0;
                                 height: 100%;
                                 
                                 >input[type='radio']{display: none;} //==============================
@@ -545,7 +554,7 @@ div.all{
                         transform: rotate(180deg);
                     }
                 }
-            }
+            }//form.searchAllOptionWrapper.active
         }//form.searchAllOptionWrapper
 
     }//header
@@ -914,11 +923,12 @@ div.all{
         }//main
 
         >div.search{
-            width: 100%; min-height: 100%;
+            width: 100%; min-height: 100%; 
             background-color: $grayColor1;
-            padding: 280px $MarPad 270px; 
+            padding: 240px $MarPad 140px; 
+            
             >div.contentsWrapper{
-                // outline: 1px solid red;
+                width: 100%; height: 100%;
                 @include flex(flex-start){
                     flex-direction: column;
                 }
@@ -959,6 +969,7 @@ div.all{
                                 display: inline-block;
                                 width: 100%; height: 30vw; max-height: 140px;
                                 border-radius: 10px;
+                                background-color: $grayColor3;
                                 overflow: hidden;
                                 margin-bottom: 15px;
 
@@ -966,7 +977,6 @@ div.all{
                                     width: 100%; height: 100%;
                                     object-fit: cover;
                                     object-position: center center;
-            
                                 }
                                 >span.heart{
                                     position: absolute; bottom: 7px; right: 7px;
@@ -975,7 +985,6 @@ div.all{
                                     
                                     &.active{
                                         background: url('/img/icon_heartActive.svg') center center / 100% 100% no-repeat scroll;
-
                                     }
                                 }//span.heart
                             }//p
@@ -987,12 +996,41 @@ div.all{
                     }//li.item
 
                 }//ul.itemsWrapper
+                
+                >figure.noSearchWrapper{
+                    position: absolute; top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    @include flex(){
+                        flex-direction: column;
+                    }
+                    >i{
+                        width: 30vw; max-width: 230px;
+                        height: 30vw; max-height: 230px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        opacity: 50%;
+                        >img{
+                            width: 100%; height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    >figcaption{
+                        margin-top: 20px;
+                        // outline: 1px solid red;
+                        @include font(2rem, 700,rgba(0, 0, 0, 0.20));
+                        letter-spacing: 3.2px;
+                        @media (max-width: 780px) {
+                            font-size: 4vw;
+                        }
+                    }
+                }//figure.noSearchWrapper
 
                 >button.moreBtn{
                     display: none;
                     border: 2px solid white; border-radius: 20px;
                     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
                     background-color: $lightColor1;
+                    text-align: center;
 
                     &.active{
                         @include flex(){
@@ -1000,11 +1038,11 @@ div.all{
                         }
                     }
                     
-                    @include font(1.5rem, 700, white){
+                    @include font(1.2rem, 700, white){
                         font-family: 'inter';
                         letter-spacing: 4.8px;
                     }
-                    padding: 15px 42px;
+                    padding: 10px 24px;
 
                     &::after{
                         margin-top: 3px;
@@ -1225,8 +1263,6 @@ div.all{
                         >div.accordion{
                             display: none;
                             overflow: hidden;
-                            // height: 0px;
-                            transition: 0.5s;
 
                             >table.infoTable{
                                 display: inline-block;
@@ -1304,7 +1340,6 @@ div.all{
                                 }
                             }
                             >div.accordion{
-                                // height: auto;
                                 display: inline-block;
 
                             }
@@ -1334,7 +1369,195 @@ div.all{
 
         }//div.detail
 
-        >div.calender{
+        >div.myList{
+            min-height: 100%;
+            padding-bottom: 92px; // footer
+            // outline: 2px solid red;
+
+            >div.titleWrapper{
+                height: 160px;
+                padding: 60px 0px;
+                border-bottom: 2px solid $lightColor1;
+
+                >h2{
+                    display: inline-block;
+                    position: relative; top: 0; left: 0; z-index: 0;
+                    @include font(2rem, 500, #555555);
+                    letter-spacing: 6.4px;
+                    white-space: nowrap;
+                    padding: 0px 20px;
+
+                    // outline: 1px solid red;
+                    >i{
+                        position: relative; top: 0; left: 0; z-index: 1;
+                        display: inline-block;
+                        margin-right: 20px;
+                    }
+                    >strong{
+                        position: relative; top: 0; left: 0; z-index: 1;
+                    }
+
+                    // 그라데이션 배경
+                    &::before{
+                        position: absolute; bottom: 0; left: 0; z-index: 0;
+                        content: '';
+                        width: 100%; height: 50%;
+                        border-radius: 0px 10px 10px 0px;
+                        background: linear-gradient(90deg, $lightColor1 0%, $lightColor2 100%);
+                    }
+                }//h2
+            }//div.titleWrapper
+
+            >div.contentsAllWrapper{
+                // outline: 2px solid blue;
+                height: calc(100vh - 252px);
+                background: linear-gradient(180deg, $lightColor1 0%, $lightColor2 100%);
+
+                >ul.itemWrapper{
+                    height: 100%;
+                    overflow: auto;
+                    &::-webkit-scrollbar {
+                        // display: none;
+                        width: 8px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: $lightColor1;
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background: $lightColor2; /* 스크롤바 뒷 배경 색상 */
+                    }
+            
+                    >li{
+                        position: relative; top: 0; left: 0; z-index: 0;
+                        width: 100%; height: 170px;
+                        padding: 25px 55px;
+                        &:not(:last-child){
+                            border-bottom: 1px solid $lightColor1;
+                        }
+                        &:last-child{
+                            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+                        }
+                        background-color: white;
+
+                        >span.num{
+                            position: absolute; top: 0; left: 0; z-index: 0;
+                            width: 30px; height: 30px;
+                            border-radius: 0px 0px 10px 0px;
+                            background-color: $lightColor1;
+                            @include font(1rem, 900, white);
+                            @include flex();
+                        }
+                        >button.xBtn{
+                            position: absolute; top: 20px; right: 20px; z-index: 0;
+                            border: none;
+                            background: none;
+                            >i{
+                                @include font(1.2rem, 500, $lightColor1);
+                            }
+                        }//button.xBtn
+
+                        >figure.contentsWrapper{
+                            height: 100%;
+                            @include flex(flex-start);
+
+                            >i.thumImg{
+                                width: 120px; height: 120px;
+                                border-radius: 10px;
+                                background-color: $lightColor2;
+                                overflow: hidden;
+                                margin-right: 32px;
+
+                                >img{
+                                    width: 100%; height: 100%;
+                                    object-fit: cover;
+                                }
+                            }//i.thumImg
+
+                            >div.rightWrapper{
+                                >figcaption{
+                                    @include font(1.75rem, 600, black);
+                                    letter-spacing: 2.8px;
+                                }//figcaption
+                                >button.goToDetail{
+                                    position: relative; top: 0; left: 0; z-index: 0;
+                                    padding: 5px 15px;
+                                    border: 1px solid $lightColor1;
+                                    border-radius: 100px;
+                                    margin-top: 20px;
+                                    background-color: white;
+                                    overflow: hidden;
+
+                                    >span.txtWrapper{
+                                        position: relative; top: 0; left: 0; z-index: 1;
+                                        @include font(0.875rem, 400, $grayColor1);
+                                        letter-spacing: 1.4px;
+                                        transition: .2s;
+
+                                        >i{
+                                            display: inline-block;
+                                        }
+                                    }//span.txtWrapper
+
+                                    &::before{
+                                        position: absolute; top: 0; left: 0; z-index: 0;
+                                        content: '';
+                                        width: 0%; height: 100%;
+                                        background-color: $lightColor1;
+                                        transition: .2s;
+                                    }
+
+
+
+                                    &:hover{
+                                        >span.txtWrapper{
+                                            color: white;
+                                            >i{
+                                            }
+                                        }
+                                        &::before{
+                                            width: 100%;
+                                        }
+                                    }
+                                }//button.goToDetail
+                            }//div.rightWrapper
+                            
+                        }//figure.contentsWrapper
+                    }//li
+                }//ul.itemWrapper
+
+                >div.noListWrapper{
+                    height: 100%;
+                    @include flex();
+                    >figure.contentsWrpper{
+                        opacity: 80%;
+                        @include flex(){
+                            flex-direction: column;
+                        }
+                        
+                        >i{
+                            width: 30vw; height: 30vw;
+                            background: url('/img/noList.svg') center center / 100% no-repeat scroll;    
+                            @media (min-width: 780px) {
+                                width: 190px; height: 190px;
+                            }
+                        }
+                        >figcaption{
+                            margin-top: 40px;
+                            @include font(4.2vw, 700, white);
+                            text-align: center;
+                            letter-spacing: 3.6px;
+                            @media (min-width: 780px) {
+                                font-size: 2rem;
+                            }
+                        }
+                    }//figure.noListWrapper
+                }//div.noListWrapper
+
+            }//div.contentsWrapper
+        }//div.myList
+
+        >div.record{
             width: 100%; min-height: 100%;
             padding: 112px 0 100px; 
 
@@ -1345,6 +1568,9 @@ div.all{
                 background: #FFF;
                 box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
                 padding: 20px $MarPad;
+                @media (min-width: 780px){
+                    padding: 20px 97px;
+                }
                 @include flex();
 
                 >div.contentsWrapper{
@@ -1428,7 +1654,7 @@ div.all{
                             
                         }//strong.plantNick
                         
-                        >b.plantName{
+                        >b.plantKind{
                             margin-right: 10px;
                             @include font(1rem, 500, $grayColor1);
                             white-space: nowrap;
@@ -1467,7 +1693,7 @@ div.all{
                 }//li.recordItem
             }//ul.recordItemsWrapper
 
-            >a.addJournal{
+            >a.addRecord{
                 position: fixed; bottom: 150px; right: calc(50% + 30px - 390px);
                 @media (max-width: 780px) {
                     right: 30px; transform: translateX(0%);
@@ -1485,19 +1711,19 @@ div.all{
             }//button.addRecord
         }//div.calender
 
-        >div.calenderRead{
+        >div.recordRead{
             width: 100%; min-height: 100%;
             padding-bottom: 140px;
             background-color: white;
 
 
-            >div.ReadImgSwiperWrapper{
+            >div.readImgSwiperWrapper{
                 width: 100%; height: 450px;
                 background-color: $grayColor3;
                 padding: 0 $MarPad;
                 position: relative; top: 0; left: 0; z-index: 0; //버튼을 보이게 하기 위해 부모를 바꿈(꼼수)
 
-                >div.ReadImgSwiper{
+                >div.readImgSwiper{
                     height: 100%;
                     overflow: hidden;
 
@@ -1537,12 +1763,36 @@ div.all{
                     }//swiper-button-next
 
                 }//div.ReadImgSwiper
+
+
+                >figure.noImg{
+                    position: absolute; top: 50%; left: 50%;
+                    transform: translate(-50%, -50%);
+                    // outline: 1px solid red;
+                    width: 50%;
+                    @include flex(){
+                        flex-direction: column;
+                    }
+                    >i{
+                        width: 28%;
+                        margin-bottom: 18px;
+                        >img{
+                            width: 100%;
+                        }
+                    }
+                    >figcaption{
+                        @include font(3vw, 700, $grayColor1);
+                        @media (min-width: 780px) {
+                            font-size: 1.5rem;
+                        }
+                    }
+                }//figure.noImg
             }//div.ReadImgSwiperWrapper
 
             >div.contentsWrapper{
                 padding: 0px $MarPad;
 
-                >form.contentsHeadWrapper{
+                >div.contentsHeadWrapper{
                     width: 100%; height: 100px;
                     // outline: 1px solid red;
                     @include flex(space-between){
@@ -1625,6 +1875,18 @@ div.all{
                     @include font(1.2rem, 500, #555);
 
                     @include text();
+                    overflow-y: auto;
+                    &::-webkit-scrollbar {
+                        // display: none;
+                        width: 8px;
+                    }
+                    &::-webkit-scrollbar-thumb {
+                        background: $lightColor1;
+                        border-radius: 10px;
+                    }
+                    &::-webkit-scrollbar-track {
+                        background: $lightColor2; /* 스크롤바 뒷 배경 색상 */
+                    }
                 }   
             }//div.contentsWrapper
 
@@ -1671,9 +1933,12 @@ div.all{
 
         }//div.calenderRead
 
-        >div.calenderWrite{
+        >div.recordWrite{
             width: 100%; min-height: 100%;
             padding: 30px $MarPad;
+            overflow: hidden; // margin 오류 해결을 위해 넣음
+            background-color: white;
+
 
             >form.contents{
 
@@ -1681,6 +1946,9 @@ div.all{
                     margin-bottom: 30px;
                     >span.explanationTxt{
                         @include font(1.25rem, 500, black);
+                        @include flex(flex-start);
+
+                        >div.infoIconWrapper{z-index: 2;}
                     }
                     
                     >div.inputWrapper{
@@ -1707,11 +1975,54 @@ div.all{
                     }//div.inputWrapper
                 }//div.dateWrapper
 
-                >div.inputAllWrapper{
+                >div.fOrRToggleWrapper{
+                    border: 1px solid $grayColor3; border-radius: 30px;
+                    width: 70px; height: 35px;
+                    background: white;
+                    padding: 5px 7px;
+                    margin-bottom: 10px;
+
+                    >div.fOrRToggle{
+                        width: 100%; height: 100%;
+                        border-radius: 50px;
+                        background: $grayColor3;
+
+                        >input#fOrR{
+                            display: none;
+                        }
+                        >label{
+                            width: 23px; height: 23px;
+                            border-radius: 50%;
+                            background-color: $lightColor1;
+                            @include flex();
+                            cursor: pointer;
+
+                            transition: .2s;
+
+                            &::after{
+                                content: '처음';
+                                @include font(10px, 600, white);
+                                transition: .2s;
+                            }
+                        }
+
+                        input:checked + label{
+                            transform: translateX(30px);
+                            background-color: $mainColor3;
+
+                            &::after{
+                                content: '기록';
+                            }
+                        }//input:checked + label
+                    }
+                }//div.fOrRToggleWrapper
+
+                div.inputAllWrapper{
                     margin-bottom: 30px;
 
                     >span.explanationTxt{
                         @include font(1.25rem, 500, black);
+                        @include flex(flex-start);
                     }
 
                     >.inputWrapper{
@@ -1728,23 +2039,90 @@ div.all{
                             width: 100%;
                             padding: 15px 20px;
                             @include font(1rem, 700, #555);
+                            
                         }
+                        >input#plantNick{
+                            -o-appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            // background: url('/img/icon_selectArrow.svg') calc(100% - 17px) 50% / 8px no-repeat scroll;
+                            
+                            &:hover{
+                                &::before{
+                                    display: none;
+                                }
+                            }
+                        }
+                        /* Styling the datalist */
+                            
                     }
                 }//div.inputWrapper
 
+                >div.toggleContentsWrapper{
+                    >div.nickWrapper{
+                        
+                    }
+                    >div.kindWrapper{
+
+                    }
+
+                    >div.nickSelectWrapper{
+                        display: none;
+                        select{
+                            border: 1px solid #555; border-radius: 10px;
+                            background: white;
+                            width: 100%;
+                            padding: 15px 20px;
+                            @include font(1rem, 700, #555);
+
+                            cursor: pointer;
+
+                            -o-appearance: none;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            background: url('/img/icon_selectArrow.svg') calc(100% - 20px) 50% / 8px no-repeat scroll;
+
+                            &:focus{
+                                outline: none;
+                            }
+
+                            >option{
+
+                            }
+                        }
+                    }//div.nickSelectWrapper
+
+                    &.recorded{
+                        >div.nickWrapper{
+                            display: none;
+                        }
+                        >div.kindWrapper{
+                            display: none;
+                        }
+                        >div.nickSelectWrapper{
+                            display: block;
+                        }
+                    }
+
+                }//div.toggleContentsWrapper
 
                 >div.mainTxtWrapper{
                     margin-bottom: 30px;
                     >span.explanationTxt{
+                        display: inline-block;
+                        width: 100%;
                         @include font(1.25rem, 500, black);
                     }
                     >textarea{
                         margin-top: 15px;
                         border: 1px dashed #555; border-radius: 10px;
                         background: white;
-                        width: 100%;
+                        width: 100%; height: 150px;
                         padding: 25px;
                         @include font(1rem, 700, #555);
+                        resize: horizontal;
 
                         &:focus{
                             outline: none;
@@ -1752,6 +2130,20 @@ div.all{
 
                         &::placeholder{
                             opacity: 70%;
+                        }
+
+
+
+                        &::-webkit-scrollbar {
+                            // display: none;
+                            width: 8px;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: $lightColor1;
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background: none; /* 스크롤바 뒷 배경 색상 */
                         }
                     }
                 }//div.mainTxtWrapper
@@ -1761,20 +2153,33 @@ div.all{
                     >div.inputWrapper{
                         @include flex(flex-start, flex-end);
                         margin-bottom: 10px;
-                        >label.icon{
-                            border-radius: 10px;
-                            border: 1px dashed #555;
-                            background: #FFF;
-                            width: 60px; height: 60px;
-                            @include flex();
-                            @include font(1.5rem, normal ,#555);
+                        >div.imgWrapper{
+                            position: relative; top: 0; left: 0; z-index: 0;
 
-                            cursor: pointer;
-                        }
-                        >input{
-                            display: none;
-                        }
-                        >span.imgLimit{
+                            >label.icon{
+                                border: 1px dashed #555; border-radius: 10px;
+                                width: 60px; height: 60px;
+                                background: white;
+                                @include flex();
+                                @include font(24px, normal ,#555);
+    
+                                cursor: pointer;
+                            }
+                            >input{ // input type="file"
+                                display: none;
+                            }
+                            >button.imgResetBtn{
+                                position: absolute; top: 0; right: -15px; z-index: 0;
+                                width: 12px; height: 12px;
+                                border: none; background: none;
+                                cursor: pointer;
+                                @include flex();
+                                >i{
+                                    @include font(14px, 400, #888888);
+                                }
+                            }
+                        }//div.imgWrapper
+                        >span.imgLimit{ // 사진 개수
                             display: inline-block;
                             margin-left: 10px;
                             @include font(1rem, 700, #555);
@@ -1787,14 +2192,14 @@ div.all{
                         width: auto;
                         >li{
                             display: inline-block;
-                            margin-right: 5px;
                             border: 1px solid $grayColor3;
                             width: 70px; height: 70px;
+                            margin-right: 5px;
                             >img{
                                 width: 100%; height: 100%;
                             }
                         }
-                    }
+                    }//ul
                 }//div.ImgWrapper
 
 
@@ -1805,6 +2210,7 @@ div.all{
                     background-color: $lightColor1;
                     @include font(1.25rem, 700, white);
                     letter-spacing: 2px;
+                    margin-bottom: 130px;
 
                     >i.icon{
                         display: inline-block;
@@ -1815,9 +2221,169 @@ div.all{
                 }//button.submitBtn
 
             }//form.contents
-        }//div.calenderWrite
+        }//div.recordWrite
 
-        >div.preferences{
+        >div.recordModify{
+            width: 100%; min-height: 100%;
+            overflow: hidden;
+
+            >div.recordExWrapper{
+                background-color: $lightColor1;
+                padding: 5px 0;
+                >dl{
+                    @include font(1rem, 500, white);
+
+                    padding: 16px 32px;
+                    @include flex(flex-start);
+
+                    &:not(:last-child){
+                        border-bottom: 1px dashed white;
+                    }
+
+                    >dt{
+                        @include flex(flex-start);
+                        letter-spacing: 1.6px;
+
+                        >i{
+                            @include font(1.5rem, 400, white);
+                            margin-right: 25px;
+                        }
+                        &::after{
+                            content: '';
+                            width: 10px; height: 2px;
+                            background-color: white;
+                            margin-left: 10px;
+                            margin-right: 15px;
+
+                        }
+                    }
+                    >dd{
+
+                    }
+                }//dl
+            }//div.recordExWrapper
+
+            >form.contentsWrapper{      
+                // outline: 1px solid red;
+                padding: 50px $MarPad;
+                width: 100%;
+
+                >div.mainTxtWrapper{
+                    margin-bottom: 30px;
+                    width: 100%;
+                    >span.explanationTxt{
+                        display: inline-block;
+                        width: 100%;
+                        @include font(1.25rem, 500, black);
+                    }
+                    >textarea{
+                        margin-top: 15px;
+                        border: 1px dashed #555; border-radius: 10px;
+                        background: white;
+                        width: 100%; height: 200px;
+                        padding: 25px;
+                        @include font(1rem, 700, #555);
+                        resize: horizontal;
+
+                        &:focus{
+                            outline: none;
+                        }
+
+                        &::placeholder{
+                            opacity: 70%;
+                        }
+
+
+                        &::-webkit-scrollbar {
+                            // display: none;
+                            width: 8px;
+                        }
+                        &::-webkit-scrollbar-thumb {
+                            background: $lightColor1;
+                            border-radius: 10px;
+                        }
+                        &::-webkit-scrollbar-track {
+                            background: none; /* 스크롤바 뒷 배경 색상 */
+                        }
+                    }
+                }//div.mainTxtWrapper
+
+
+                >div.ImgWrapper{
+                    >div.inputWrapper{
+                        @include flex(flex-start, flex-end);
+                        margin-bottom: 10px;
+                        >div.imgWrapper{
+                            position: relative; top: 0; left: 0; z-index: 0;
+
+                            >label.icon{
+                                border: 1px dashed #555; border-radius: 10px;
+                                width: 60px; height: 60px;
+                                background: white;
+                                @include flex();
+                                @include font(24px, normal ,#555);
+    
+                                cursor: pointer;
+                            }
+                            >input{ // input type="file"
+                                display: none;
+                            }
+                            >button.imgResetBtn{
+                                position: absolute; top: 0; right: -15px; z-index: 0;
+                                width: 12px; height: 12px;
+                                border: none; background: none;
+                                cursor: pointer;
+                                @include flex();
+                                >i{
+                                    @include font(14px, 400, #888888);
+                                }
+                            }
+                        }//div.imgWrapper
+                        >span.imgLimit{ // 사진 개수
+                            display: inline-block;
+                            margin-left: 10px;
+                            @include font(1rem, 700, #555);
+                            letter-spacing: 1.6px;
+                            >code{}
+                        }
+                    }//div.inputWrapper
+                    >ul{
+                        @include flex(flex-start);
+                        width: auto;
+                        >li{
+                            display: inline-block;
+                            border: 1px solid $grayColor3;
+                            width: 70px; height: 70px;
+                            margin-right: 5px;
+                            >img{
+                                width: 100%; height: 100%;
+                            }
+                        }
+                    }//ul
+                }//div.ImgWrapper
+
+
+                >button.submitBtn{
+                    float: right;
+                    border: none; border-radius: 10px;
+                    padding: 10px 15px;
+                    background-color: $lightColor1;
+                    @include font(1.25rem, 700, white);
+                    letter-spacing: 2px;
+                    margin-bottom: 130px;
+
+                    >i.icon{
+                        display: inline-block;
+                        font-weight: normal;
+                        margin-right: 7px;
+                    }
+
+                }//button.submitBtn
+
+            }//form.contents
+        }//div.recordModify
+
+        >div.setting{
             padding-top: 45px;
             >ul.contents{
                 width: 100%;
@@ -1840,21 +2406,21 @@ div.all{
                     }
                 }//li
             }//ul.contents
-        }//div.preferences
+        }//div.setting
 
     }//main // layout.js
 
     >footer{
         display: none;
-        position: fixed; bottom: 0; left: 50%; z-index: 100;
-        transform: translateX(-50%);
+        position: fixed; bottom: 0; left: 50%; z-index: 100; transform: translateX(-50%);
         width: 100%; max-width: 780px;
         background-color: white;
-        border-radius: 35px 35px 0 0;
-        padding: 25px 70px;
+        padding: 22px $MarPad;
+        @media (min-width: 780px){
+            padding: 22px 100px;
+        }
 
         box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
-        //filter: drop-shadow(0px -4px 4px 0px rgba(0, 0, 0, 0.25));
 
         &.active{
             display: inline-block;
@@ -1863,37 +2429,21 @@ div.all{
         &.noHeader{
             display: inline-block;
         }
+        
 
         >div.contents{
-            position: relative; top: 0; left: 0; z-index: 0;
             @include flex(space-between);
+            // outline: 1px solid red;
             >a{
-                width: 70px; height: 70px;
-            }
-
-            >a.homeLink{
-                background: url('/img/icon_home.svg') center center / 100% 100% no-repeat scroll;
-            }
-            >div.preferencesWrapper{
-                position: absolute; left: 50%; top: 0; transform: translate(-50%, -50%);
-                width: 160px; height: 160px;
-                background-color: white; border-radius: 50%;
-                padding: 14px;
-                box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
-
-                a.preferences{
-                    display: inline-block;
-                    border: none;
-                    width: 100%; height: 100%;
-                    background: url('/img/icon_logo.svg') center center / 100% 100% no-repeat scroll;
-
+                width: 50px; height: 50px;
+                // outline: 1px solid red;
+                @include flex();
+                text-decoration: none;
+                >i{
+                    @include font(3.5rem, 400, #555555);
                 }
             }
-            >a.calenderLink{
-                background: url('/img/icon_edit.svg') center center / 100% 100% no-repeat scroll;
-            }
-        }
-
+        }//div.contents
         
     }//footer
 
@@ -1924,102 +2474,139 @@ div.all{
 
 
 
-    div.react-datepicker{
-        border: 1px solid $grayColor1;
-        overflow: hidden;
-        >div.react-datepicker__triangle{
-            display: none;
-        }
 
-        >span.react-datepicker__aria-live{
-            
-        }
+
+
+    div.react-datepicker-popper{
+        z-index: 5;
         
-        >button.react-datepicker__navigation{
+        div.react-datepicker{
+            border: none;
+            box-shadow: 0px 4px 4px 2px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+    
+            >div.react-datepicker__triangle{
+                display: none;
+            }
+    
+            >span.react-datepicker__aria-live{
+                
+            }
             
-            span{
-                &::before{
-                    border-color: #fff;
-                    border-width: 2px 2px 0 0;
-                }
-
-            }
-            &.react-datepicker__navigation--previous{
-                >span{
-                }
-            }
-            
-            &.react-datepicker__navigation--next{
-                >span{
-                }
-            }
-        } 
-
-
-        //달력
-        >div.react-datepicker__month-container{
-
-            // 헤더)
-            >div.react-datepicker__header{
-                border: none;
-                border-radius: 0;
-                background-color: $mainColor1;
-                >.react-datepicker__current-month{
-                    color: white;
-
+            >button.react-datepicker__navigation{
+                
+                span{
                     &::before{
-                        display: inline-block;
-                        content: '';
-                        width: 12px; height: 12px;
-                        background: url('/img/icon_leaves_white.svg') center center / 100% 100% no-repeat scroll;
-                        margin-right: 5px;
+                        border-color: #fff;
+                        border-width: 2px 2px 0 0;
+                    }
+    
+                }
+                &.react-datepicker__navigation--previous{
+                    >span{
                     }
                 }
                 
-                // 요일들
-                .react-datepicker__day-names{
-                    .react-datepicker__day-name{ // 요일
+                &.react-datepicker__navigation--next{
+                    >span{
+                    }
+                }
+            } 
+    
+    
+            //달력
+            >div.react-datepicker__month-container{
+    
+                // 헤더)
+                >div.react-datepicker__header{
+                    border: none;
+                    border-radius: 0;
+                    background-color: $mainColor1;
+                    >.react-datepicker__current-month{
                         color: white;
+    
+                        &::before{
+                            display: inline-block;
+                            content: '';
+                            width: 12px; height: 12px;
+                            background: url('/img/icon_leaves_white.svg') center center / 100% 100% no-repeat scroll;
+                            margin-right: 5px;
+                        }
                     }
-                }
-                 
-
-            }//div.react-datepicker__header // 헤더)
-            
-            // 몸통)
-            >div.react-datepicker__month{
-                // 모든 날짜
-                .react-datepicker__day{
-                    &:hover{
-                        background-color: rgba(224, 227, 210, 0.5);
-                    }
-                }  
-
-                
-                //오늘
-                .react-datepicker__day--today{
-                    background-color: $lightColor2; border-radius: 50%;
-                    font-weight: normal;
-                    // color: white
                     
-                }
+                    // 요일들
+                    .react-datepicker__day-names{
+                        .react-datepicker__day-name{ // 요일
+                            color: white;
+                        }
+                    }
+                     
+    
+                }//div.react-datepicker__header // 헤더)
                 
-                // 선택한 날짜
-                .react-datepicker__day--selected, .react-datepicker__day--keyboard-selected{
-                    background-color: $lightColor1; border-radius: 50%;
-                    font-weight: bold;
-                    // color: black;
-                }
-            }//div.react-datepicker__month // 몸통)
+                // 몸통)
+                >div.react-datepicker__month{
+                    // 모든 날짜
+                    .react-datepicker__day{
+                        &:hover{
+                            background-color: rgba(224, 227, 210, 0.5);
+                        }
+                    }  
+    
+                    
+                    //오늘
+                    .react-datepicker__day--today{
+                        background-color: $lightColor2; border-radius: 50%;
+                        font-weight: normal;
+                        // color: white
+                        
+                    }
+                    
+                    // 선택한 날짜
+                    .react-datepicker__day--selected, .react-datepicker__day--keyboard-selected{
+                        background-color: $lightColor1; border-radius: 50%;
+                        font-weight: bold;
+                        // color: black;
+                    }
+                }//div.react-datepicker__month // 몸통)
+    
+            }//div.react-datepicker__month-container
+            
+        }//div.react-datepicker
 
-        }//div.react-datepicker__month-container
-        
-    }//div.react-datepicker
+    }//div.react-datepicker-popper
 
 
-    i.infoIcon{
+
+    div.infoIconWrapper{
+        position: relative; top: 0; left: 0; z-index: 1;
         display: inline-block;
         margin-left: 5px;
-    }
+        resize: vertical;
+        
+        >div.exBox{
+            display: none;
+            position: absolute; bottom: -4px; left: 0; z-index: 1;
+            transform: translate(-100%, 100%);
+            width: 170px; border-radius: 10px;
+            background: white;
+            padding: 15px;
+            box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+
+            @include font(14px, 400, #555);
+            @include text();
+        }//div.exBox
+
+        >i.infoIcon{
+            display: inline-block;
+            
+        }
+
+        &:hover{
+            >div.exBox{
+                display: inline-block;
+            }
+        }//div.infoIconWrapper:hover
+    }//div.infoIconWrapper
 
 }// div.all

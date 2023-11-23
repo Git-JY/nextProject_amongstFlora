@@ -5,7 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import { Mycontext } from '@/app/Context';
 
 export default function Detail() {
-  const {setVisual, detailObj, setFootVisual} = useContext(Mycontext);
+  const {setVisual, detailObj} = useContext(Mycontext);
 
   useEffect(()=>{
     setVisual('noHeader');
@@ -39,7 +39,6 @@ export default function Detail() {
   }//sliceFun() 함수정의
 
   const accordionFun = (e) => {
-    console.log('됨???');
     e.target.parentElement.classList.toggle('active');
   }//accordionFun();
 

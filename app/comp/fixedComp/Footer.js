@@ -1,16 +1,20 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <>
-        <div className='contents'>
-            <Link href="/page/home" className='homeLink'></Link>
-            <div className='preferencesWrapper'>
-                <Link className='preferences' href="/page/preferences"></Link>
-            </div>
-            <Link href="/page/calender" className='calenderLink'></Link>
-        </div>
-    </>
+    <div className='contents'>
+      <Link href="/page/home" className='homeLink' >
+        <i className="ri-home-5-line"/>
+      </Link>
+      <Link href="/page/mylist" className='myListLink'>
+        <i className="ri-hearts-line"/>
+      </Link>
+      <Link href="/page/record" className='recordLink'>
+        <i className="ri-edit-box-line"/>
+      </Link>
+      <Link href="/page/setting" className='settingLink'>
+        <i className="ri-settings-4-line"/>
+      </Link>
+    </div>
   )
 }

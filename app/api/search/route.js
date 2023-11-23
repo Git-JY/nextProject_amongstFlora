@@ -5,14 +5,16 @@ import { searchDb } from "../db";
 export async function POST(req){    
     const {data} = await req.json(); 
     console.log('검색옵션: ', data);
-    console.log('검색타입: ', typeof(data));
-    console.log('222: ', data.sText);
 
     let paramObj = {};
 
-    if(data.sText != ''){
+    if(data.sText != ''){// 검색 내용
         paramObj.sType = data.sType;
         paramObj.sText = data.sText;
+    }
+    if(data.word != '0'){// 첫 글자(한글)
+        paramObj.wordType = 'cntntsSj';
+        paramObj.word = data.word;
     }
 
     if(data.flclrChkVal != '0'){ // 꽃 색
@@ -55,7 +57,11 @@ export async function POST(req){
         paramObj.priceTypeSel = data.priceTypeSel;
     }
 
-    // console.log('전체: ', paramObj);
+    if(data.pageNo){ //pageNo이 있을 때
+        paramObj.pageNo = data.pageNo;
+    }
+    paramObj.numOfRows = 9; // 갖고 올 아이템을 9개로 함
+    // console.log('전체: ', parasmObj);
 
     let takedData = await searchDb.get('/', {params: paramObj});
     // console.log('결과: ', takedData.data);

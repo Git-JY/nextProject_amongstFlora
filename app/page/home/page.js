@@ -1,5 +1,4 @@
 import Home from '../../comp/home/Home';
-import React from 'react'
 
 export default function page() {
 
